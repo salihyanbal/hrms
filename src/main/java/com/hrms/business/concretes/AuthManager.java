@@ -17,8 +17,9 @@ import com.hrms.entities.dtos.RegisterForCandidateDto;
 import com.hrms.entities.dtos.RegisterForEmployerDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class AuthManager implements AuthService {
 
     private UserService userService;
@@ -97,8 +98,7 @@ public class AuthManager implements AuthService {
 
     public boolean checkEmployerDomain(RegisterForEmployerDto registerForEmployerDto) {
         String mailDomain = registerForEmployerDto.getEmail().split("@")[1];
-        return mailDomain.equals(registerForEmployerDto.getWebsite()) ?
-                true : false;
+        return mailDomain.equals(registerForEmployerDto.getWebsite());
     }
 
 }
