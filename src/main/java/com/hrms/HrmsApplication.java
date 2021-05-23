@@ -20,7 +20,7 @@ public class HrmsApplication {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.northwind"))
+                .apis(RequestHandlerSelectors.basePackage("com.hrms"))
                 .build();
     }
 
