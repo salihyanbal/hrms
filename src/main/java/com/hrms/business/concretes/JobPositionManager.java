@@ -21,7 +21,7 @@ public class JobPositionManager implements JobPositionService {
 
     @Override
     public Result add(JobPosition jobPosition) {
-        if(getByName(jobPosition.getName()) != null){
+        if(getByName(jobPosition.getName()).getData() != null){
             return new ErrorResult("Aynı pozisyon zaten var.");
         }
         this.jobPositionDao.save(jobPosition);
