@@ -55,7 +55,7 @@ public class AuthManager implements AuthService {
             return new ErrorResult("Tüm bilgiler doldurulmalıdır.");
         }
 
-        if(this.userService.getByEmail(registerForEmployerDto.getEmail()) != null){
+        if(this.userService.getByEmail(registerForEmployerDto.getEmail()).getData() != null){
             return new ErrorResult("Bu maile ait bi şirket zaten kayıtlı.");
         }
 
@@ -76,8 +76,8 @@ public class AuthManager implements AuthService {
             return new ErrorResult("Tüm bilgiler doldurulmalıdır.");
         }
 
-        if(this.userService.getByEmail(registerForJobSeekerDto.getEmail()) != null &&
-            this.candidateService.getByIdentificationNumber(registerForJobSeekerDto.getIdentificationNumber()) !=null){
+        if(this.userService.getByEmail(registerForJobSeekerDto.getEmail()).getData() != null &&
+            this.candidateService.getByIdentificationNumber(registerForJobSeekerDto.getIdentificationNumber()).getData() !=null){
             return new ErrorResult("Bu maile veya TC kimlik numarasına ait birisi zaten kayıtlı");
         }
 

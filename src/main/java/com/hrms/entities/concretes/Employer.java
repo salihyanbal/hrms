@@ -1,17 +1,20 @@
 package com.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobPostings"})
 @Table(name="employers")
 public class Employer extends User{
 
@@ -26,4 +29,7 @@ public class Employer extends User{
 
     @Column(name="is_activated_by_employee")
     private boolean isActivatedByEmployee;
+
+    @OneToMany(mappedBy = "employer")
+    private List<JobPosting> jobPostings;
 }
