@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -19,12 +21,18 @@ import java.util.List;
 public class Employer extends User{
 
     @Column(name="company_name")
+    @NotNull
+    @NotBlank
     private String companyName;
 
     @Column(name="web_address")
+    @NotNull
+    @NotBlank
     private String webAddress;
 
     @Column(name="phone_number")
+    @NotNull
+    @NotBlank
     private String phoneNumber;
 
     @Column(name="is_activated_by_employee")

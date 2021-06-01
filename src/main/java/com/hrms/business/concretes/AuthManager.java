@@ -46,15 +46,9 @@ public class AuthManager implements AuthService {
 
     @Override
     public Result registerForEmployer(RegisterForEmployerDto registerForEmployerDto) {
-        if(registerForEmployerDto.getCompanyName() == null &&
-                registerForEmployerDto.getWebsite() == null &&
-                registerForEmployerDto.getPhoneNumber() == null &&
-                registerForEmployerDto.getEmail() == null &&
-                registerForEmployerDto.getPassword() == null &&
-                checkEmployerDomain(registerForEmployerDto)){
-            return new ErrorResult("Tüm bilgiler doldurulmalıdır.");
+        if(!checkEmployerDomain(registerForEmployerDto)){
+            return new ErrorResult("Mail domaininiz şirket sitenizin domainiyle aynı olmak zorundadır.");
         }
-
         if(this.userService.getByEmail(registerForEmployerDto.getEmail()).getData() != null){
             return new ErrorResult("Bu maile ait bi şirket zaten kayıtlı.");
         }
@@ -66,27 +60,19 @@ public class AuthManager implements AuthService {
     }
 
     @Override
-    public Result registerForCandidate(RegisterForCandidateDto registerForJobSeekerDto) {
-        if(registerForJobSeekerDto.getFirstName() == null &&
-                registerForJobSeekerDto.getLastName() == null &&
-                registerForJobSeekerDto.getIdentificationNumber() == null &&
-                registerForJobSeekerDto.getBirthYear() == null &&
-                registerForJobSeekerDto.getEmail() == null &&
-                registerForJobSeekerDto.getPassword() == null){
-            return new ErrorResult("Tüm bilgiler doldurulmalıdır.");
-        }
+    public Result registerForCandidate(RegisterForCandidateDto registerForCandidateDto) {
 
-        if(this.userService.getByEmail(registerForJobSeekerDto.getEmail()).getData() != null &&
-            this.candidateService.getByIdentificationNumber(registerForJobSeekerDto.getIdentificationNumber()).getData() !=null){
+        if(this.userService.getByEmail(registerForCandidateDto.getEmail()).getData() != null &&
+            this.candidateService.getByIdentificationNumber(registerForCandidateDto.getIdentificationNumber()).getData() !=null){
             return new ErrorResult("Bu maile veya TC kimlik numarasına ait birisi zaten kayıtlı");
         }
 
-        if(!validatePersonService.validate(modelMapper.map(registerForJobSeekerDto, MernisPerson.class))){
+        if(!validatePersonService.validate(modelMapper.map(registerForCandidateDto, MernisPerson.class))){
             return new ErrorResult("Kimlik doğrulanmadı");
         }
 
-        mailService.send(registerForJobSeekerDto.getEmail());
-        Candidate candidatesForRegister = modelMapper.map(registerForJobSeekerDto, Candidate.class);
+        mailService.send(registerForCandidateDto.getEmail());
+        Candidate candidatesForRegister = modelMapper.map(registerForCandidateDto, Candidate.class);
         candidateService.add(candidatesForRegister);
         return new SuccessResult("Kullanıcı kaydoldu.");
     }

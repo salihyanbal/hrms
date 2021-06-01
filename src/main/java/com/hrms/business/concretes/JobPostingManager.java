@@ -24,12 +24,6 @@ public class JobPostingManager implements JobPostingService {
 
     @Override
     public Result add(JobPosting jobPosting) {
-        if(jobPosting.getCity() == null ||
-            jobPosting.getJobDescription() == null ||
-            jobPosting.getOpenPositionCount() == 0 ||
-            jobPosting.getCity() == null){
-            return new ErrorResult("Alanlar boş bırakılmamalıdır.");
-        }
         jobPosting.setPublishedAt(LocalDate.now());
         this.jobPostingDao.save(jobPosting);
         return new SuccessResult("İş ilanı eklendi");

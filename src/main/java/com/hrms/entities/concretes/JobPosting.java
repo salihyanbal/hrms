@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -22,6 +24,8 @@ public class JobPosting {
     private int id;
 
     @Column(name = "job_description")
+    @NotNull
+    @NotBlank
     private String jobDescription;
 
     @Column(name = "min_salary")
@@ -31,6 +35,8 @@ public class JobPosting {
     private double maxSalary;
 
     @Column(name = "open_position_count")
+    @NotNull
+    @NotBlank
     private int openPositionCount;
 
     @Column(name = "published_at")
@@ -48,7 +54,7 @@ public class JobPosting {
     @JoinColumn(name = "job_position_id")
     private JobPosition jobPosition;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "employer_id")
     private Employer employer;
 

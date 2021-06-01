@@ -3,10 +3,8 @@ package com.hrms.api.controllers;
 import com.hrms.business.abstracts.CandidateService;
 import com.hrms.entities.concretes.Candidate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/candidates")
@@ -22,5 +20,10 @@ public class CandidatesController {
     @PostMapping("/add")
     public void add(@RequestBody Candidate candidates){
         this.candidateService.add(candidates);
+    }
+
+    @GetMapping("/getcvbycandidateid")
+    public ResponseEntity<?> getCvByCandidateId(@RequestParam int candidateId){
+        return ResponseEntity.ok(this.candidateService.getCvByCandidateId(candidateId));
     }
 }
