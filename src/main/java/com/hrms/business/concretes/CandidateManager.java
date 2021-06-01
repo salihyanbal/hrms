@@ -17,22 +17,22 @@ import java.util.List;
 public class CandidateManager implements CandidateService {
 
     private CandidateDao candidateDao;
-    private CandidateEducationService candidateEducationDao;
-    private CandidateExperienceService candidateExperienceDao;
-    private CandidateImageService candidateImageDao;
-    private CandidateLanguageService candidateLanguageDao;
-    private CandidateLinkService candidateLinkDao;
-    private CandidateSkillService candidateSkillServiceDao;
+    private CandidateEducationService candidateEducationService;
+    private CandidateExperienceService candidateExperienceService;
+    private CandidateImageService candidateImageService;
+    private CandidateLanguageService candidateLanguageService;
+    private CandidateLinkService candidateLinkService;
+    private CandidateSkillService candidateSkillService;
 
     @Autowired
-    public CandidateManager(CandidateDao candidateDao, CandidateEducationService candidateEducationDao, CandidateExperienceService candidateExperienceDao, CandidateImageService candidateImageDao, CandidateLanguageService candidateLanguageDao, CandidateLinkService candidateLinkDao, CandidateSkillService candidateSkillServiceDao) {
+    public CandidateManager(CandidateDao candidateDao, CandidateEducationService candidateEducationService, CandidateExperienceService candidateExperienceService, CandidateImageService candidateImageService, CandidateLanguageService candidateLanguageService, CandidateLinkService candidateLinkService, CandidateSkillService candidateSkillService) {
         this.candidateDao = candidateDao;
-        this.candidateEducationDao = candidateEducationDao;
-        this.candidateExperienceDao = candidateExperienceDao;
-        this.candidateImageDao = candidateImageDao;
-        this.candidateLanguageDao = candidateLanguageDao;
-        this.candidateLinkDao = candidateLinkDao;
-        this.candidateSkillServiceDao = candidateSkillServiceDao;
+        this.candidateEducationService = candidateEducationService;
+        this.candidateExperienceService = candidateExperienceService;
+        this.candidateImageService = candidateImageService;
+        this.candidateLanguageService = candidateLanguageService;
+        this.candidateLinkService = candidateLinkService;
+        this.candidateSkillService = candidateSkillService;
     }
 
     @Override
@@ -60,12 +60,12 @@ public class CandidateManager implements CandidateService {
     public DataResult<CurriculumVitaeDto> getCvByCandidateId(int candidateId) {
         CurriculumVitaeDto curriculumVitaeDto = new CurriculumVitaeDto();
         curriculumVitaeDto.setCandidate(this.getById(candidateId).getData());
-        curriculumVitaeDto.setCandidateEducation(this.candidateEducationDao.getAllByCandidateIdOrderByGraduationYear(candidateId).getData());
-        curriculumVitaeDto.setCandidateExperiences(this.candidateExperienceDao.getAllByCandidateIdOrderByLeaveDate(candidateId).getData());
-        curriculumVitaeDto.setCandidateImage(this.candidateImageDao.getAllByCandidateId(candidateId).getData());
-        curriculumVitaeDto.setCandidateLanguage(this.candidateLanguageDao.getAllByCandidateId(candidateId).getData());
-        curriculumVitaeDto.setCandidateLink(this.candidateLinkDao.getAllByCandidateId(candidateId).getData());
-        curriculumVitaeDto.setCandidateSkill(this.candidateSkillServiceDao.getAllByCandidateId(candidateId).getData());
+        curriculumVitaeDto.setCandidateEducations(this.candidateEducationService.getAllByCandidateIdOrderByGraduationYear(candidateId).getData());
+        curriculumVitaeDto.setCandidateExperiences(this.candidateExperienceService.getAllByCandidateIdOrderByLeaveDate(candidateId).getData());
+        curriculumVitaeDto.setCandidateImages(this.candidateImageService.getAllByCandidateId(candidateId).getData());
+        curriculumVitaeDto.setCandidateLanguages(this.candidateLanguageService.getAllByCandidateId(candidateId).getData());
+        curriculumVitaeDto.setCandidateLinks(this.candidateLinkService.getAllByCandidateId(candidateId).getData());
+        curriculumVitaeDto.setCandidateSkills(this.candidateSkillService.getAllByCandidateId(candidateId).getData());
         return new SuccessDataResult<>(curriculumVitaeDto);
     }
 

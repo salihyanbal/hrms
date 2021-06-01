@@ -12,10 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class CurriculumVitaeDto {
     private Candidate candidate;
-    private List<CandidateEducation> candidateEducation;
+    private List<CandidateEducation> candidateEducations;
     private List<CandidateExperience> candidateExperiences;
-    private List<CandidateImage> candidateImage;
-    private List<CandidateLanguage> candidateLanguage;
-    private List<CandidateLink> candidateLink;
-    private List<CandidateSkill> candidateSkill;
+    private List<CandidateImage> candidateImages;
+    private List<CandidateLanguage> candidateLanguages;
+    private List<CandidateLink> candidateLinks;
+    private List<CandidateSkill> candidateSkills;
 }
