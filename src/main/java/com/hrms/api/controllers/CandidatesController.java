@@ -22,8 +22,8 @@ public class CandidatesController {
         this.candidateService.add(candidates);
     }
 
-    @GetMapping("/getcvbycandidateid")
-    public ResponseEntity<?> getCvByCandidateId(@RequestParam int candidateId){
-        return ResponseEntity.ok(this.candidateService.getCvByCandidateId(candidateId));
+    @GetMapping("/getresumebycandidateid")
+    public ResponseEntity<?> getResumeByCandidateId(@RequestParam int candidateId){
+        return ResponseEntity.ok(this.candidateService.getResumeByCandidateId(candidateId));
     }
 }

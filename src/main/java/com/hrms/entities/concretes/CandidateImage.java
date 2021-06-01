@@ -25,7 +25,7 @@ public class CandidateImage {
     @Column(name = "uploaded_at")
     private LocalDate uploadedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JsonIgnore()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;

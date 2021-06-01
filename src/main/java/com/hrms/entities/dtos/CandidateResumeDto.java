@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CurriculumVitaeDto {
+public class CandidateResumeDto {
     private Candidate candidate;
     private List<CandidateEducation> candidateEducations;
     private List<CandidateExperience> candidateExperiences;

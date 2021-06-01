@@ -7,7 +7,7 @@ import com.hrms.core.utilities.results.SuccessDataResult;
 import com.hrms.core.utilities.results.SuccessResult;
 import com.hrms.dataAccess.abstracts.CandidateDao;
 import com.hrms.entities.concretes.*;
-import com.hrms.entities.dtos.CurriculumVitaeDto;
+import com.hrms.entities.dtos.CandidateResumeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,16 +57,16 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public DataResult<CurriculumVitaeDto> getCvByCandidateId(int candidateId) {
-        CurriculumVitaeDto curriculumVitaeDto = new CurriculumVitaeDto();
-        curriculumVitaeDto.setCandidate(this.getById(candidateId).getData());
-        curriculumVitaeDto.setCandidateEducations(this.candidateEducationService.getAllByCandidateIdOrderByGraduationYear(candidateId).getData());
-        curriculumVitaeDto.setCandidateExperiences(this.candidateExperienceService.getAllByCandidateIdOrderByLeaveDate(candidateId).getData());
-        curriculumVitaeDto.setCandidateImages(this.candidateImageService.getAllByCandidateId(candidateId).getData());
-        curriculumVitaeDto.setCandidateLanguages(this.candidateLanguageService.getAllByCandidateId(candidateId).getData());
-        curriculumVitaeDto.setCandidateLinks(this.candidateLinkService.getAllByCandidateId(candidateId).getData());
-        curriculumVitaeDto.setCandidateSkills(this.candidateSkillService.getAllByCandidateId(candidateId).getData());
-        return new SuccessDataResult<>(curriculumVitaeDto);
+    public DataResult<CandidateResumeDto> getResumeByCandidateId(int candidateId) {
+        CandidateResumeDto candidateResumeDto = new CandidateResumeDto();
+        candidateResumeDto.setCandidate(this.getById(candidateId).getData());
+        candidateResumeDto.setCandidateEducations(this.candidateEducationService.getAllByCandidateIdOrderByGraduationYear(candidateId).getData());
+        candidateResumeDto.setCandidateExperiences(this.candidateExperienceService.getAllByCandidateIdOrderByLeaveDate(candidateId).getData());
+        candidateResumeDto.setCandidateImages(this.candidateImageService.getAllByCandidateId(candidateId).getData());
+        candidateResumeDto.setCandidateLanguages(this.candidateLanguageService.getAllByCandidateId(candidateId).getData());
+        candidateResumeDto.setCandidateLinks(this.candidateLinkService.getAllByCandidateId(candidateId).getData());
+        candidateResumeDto.setCandidateSkills(this.candidateSkillService.getAllByCandidateId(candidateId).getData());
+        return new SuccessDataResult<>(candidateResumeDto);
     }
 
 }

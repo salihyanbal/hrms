@@ -40,7 +40,7 @@ public class CandidateExperience {
     @Column(name = "leave_date")
     private LocalDate leaveDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JsonIgnore()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;

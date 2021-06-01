@@ -24,7 +24,7 @@ public class CandidateLanguage {
     @Min(1)
     @Max(5)
     @NotNull
-    private int level;
+    private short level;
 
     @ManyToOne()
     @JsonIgnore()
