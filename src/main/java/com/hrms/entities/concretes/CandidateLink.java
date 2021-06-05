@@ -23,12 +23,10 @@ public class CandidateLink {
     private String link;
 
     @ManyToOne()
-    @JsonIgnore()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
     @ManyToOne()
-    @JsonIgnore()
     @JoinColumn(name = "link_type_id")
     private LinkType linkType;
 }

@@ -26,7 +26,6 @@ public class CandidateImage {
     private LocalDate uploadedAt;
 
     @ManyToOne()
-    @JsonIgnore()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 }

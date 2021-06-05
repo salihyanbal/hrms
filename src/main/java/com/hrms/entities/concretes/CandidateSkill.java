@@ -22,7 +22,6 @@ public class CandidateSkill {
     private String name;
 
     @ManyToOne()
-    @JsonIgnore()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 }

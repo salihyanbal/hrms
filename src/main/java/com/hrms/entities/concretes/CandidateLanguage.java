@@ -27,12 +27,10 @@ public class CandidateLanguage {
     private short level;
 
     @ManyToOne()
-    @JsonIgnore()
     @JoinColumn(name = "language_id")
     private Language language;
 
     @ManyToOne()
-    @JsonIgnore()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 }

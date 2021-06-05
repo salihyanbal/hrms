@@ -1,9 +1,9 @@
-package com.hrms.core.utilities.imageService;
+package com.hrms.core.utilities.uploadService.imageUpload;
 
 import com.hrms.core.utilities.results.DataResult;
 import org.springframework.web.multipart.MultipartFile;
 
 
-public interface ImageService {
+public interface ImageUploadService {
     DataResult<?> save(MultipartFile file);
 }

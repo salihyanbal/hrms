@@ -38,8 +38,8 @@ public class Candidate extends User{
     @NotBlank
     private String birthYear;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "cover_letter")
+    private String coverLetter;
 
     @OneToMany(mappedBy = "candidate")
     @JsonIgnore()
