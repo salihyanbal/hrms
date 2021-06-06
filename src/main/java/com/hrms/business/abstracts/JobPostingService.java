@@ -12,6 +12,7 @@ public interface JobPostingService {
 
     Result add(JobPosting jobPosting);
     Result toggleActiveStatus(int id);
+    DataResult<JobPosting> getById(int id);
     DataResult<List<JobPosting>> getAll();
     DataResult<List<JobPosting>> getAllByApplicationDeadline(LocalDate date);
     DataResult<List<JobPosting>> getAllByEmployer(int employerId);

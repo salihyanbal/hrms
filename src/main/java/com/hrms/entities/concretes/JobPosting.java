@@ -28,10 +28,10 @@ public class JobPosting {
     private String jobDescription;
 
     @Column(name = "min_salary")
-    private double minSalary;
+    private Double minSalary;
 
     @Column(name = "max_salary")
-    private double maxSalary;
+    private Double maxSalary;
 
     @Column(name = "open_position_count")
     @NotNull

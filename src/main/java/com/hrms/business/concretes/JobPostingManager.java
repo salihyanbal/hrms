@@ -38,6 +38,11 @@ public class JobPostingManager implements JobPostingService {
     }
 
     @Override
+    public DataResult<JobPosting> getById(int id) {
+        return new SuccessDataResult<>(this.jobPostingDao.findById(id).get());
+    }
+
+    @Override
     public DataResult<List<JobPosting>> getAll() {
         return new SuccessDataResult<>(this.jobPostingDao.findAll());
     }

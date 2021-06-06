@@ -8,6 +8,7 @@ import com.hrms.entities.concretes.JobPosting;
 import org.apache.james.mime4j.dom.datetime.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobpostings")
+@CrossOrigin
 public class JobPostingsController {
 
     private JobPostingService jobPostingService;
@@ -37,6 +39,11 @@ public class JobPostingsController {
     @GetMapping("/getall")
     public DataResult<List<JobPosting>> getAll(){
         return this.jobPostingService.getAll();
+    }
+
+    @GetMapping("/getbyid")
+    public ResponseEntity<?> getById(@RequestParam int id){
+        return ResponseEntity.ok(this.jobPostingService.getById(id));
     }
 
     @GetMapping("/getallbyapplicationdeadline")
