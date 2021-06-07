@@ -8,9 +8,9 @@ export default function JobPostCard({ jobPost, setCurrentJobPost }) {
     setCurrentJobPost(jobPost);
   }
   return (
-    <div onClick={() => setJobDetails()}>
+    <div>
       <Card.Group>
-        <Card>
+        <Card onClick={() => setJobDetails()}>
           <Card.Content>
             <Grid>
               <Grid.Row>
