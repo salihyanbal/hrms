@@ -25,6 +25,9 @@ public class CandidateImage {
     @Column(name = "uploaded_at")
     private LocalDate uploadedAt;
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
     @ManyToOne()
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;

@@ -35,12 +35,24 @@ public class CandidateImageManager implements CandidateImageService {
     }
 
     @Override
-    public Result add(CandidateImage candidateImage, MultipartFile file) {
+    public Result change(CandidateImage candidateImage, MultipartFile file) {
         Map<String,?> result = (Map<String,?>) imageUploadService.save(file).getData();
         String url = (String) result.get("url");
         candidateImage.setUrl(url);
         candidateImage.setUploadedAt(LocalDate.now());
+        if( this.getByCandidateIdAndNotDeleted(candidateImage.getCandidate().getId()).getData() != null){
+            delete(candidateImage.getCandidate().getId());
+        }
+
         return add(candidateImage);
+    }
+
+    @Override
+    public Result delete(int candidateId) {
+        CandidateImage candidateImageToDelete = getByCandidateIdAndNotDeleted(candidateId).getData();
+        candidateImageToDelete.setDeleted(true);
+        this.candidateImageDao.save(candidateImageToDelete);
+        return new SuccessResult();
     }
 
     @Override
@@ -49,7 +61,8 @@ public class CandidateImageManager implements CandidateImageService {
     }
 
     @Override
-    public DataResult<List<CandidateImage>> getAllByCandidateId(int candidateId) {
-        return new SuccessDataResult<>(this.candidateImageDao.getAllByCandidateId(candidateId));
+    public DataResult<CandidateImage> getByCandidateIdAndNotDeleted(int candidateId) {
+        return new SuccessDataResult<>(this.candidateImageDao.getByCandidateIdAndIsDeletedFalse(candidateId));
     }
+
 }

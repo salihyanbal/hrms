@@ -20,13 +20,18 @@ public class CandidateImagesController {
         this.candidateImageService = candidateImageService;
     }
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<?> add(@RequestBody MultipartFile file,@RequestParam int candidateId) {
+    @PostMapping(value = "/change")
+    public ResponseEntity<?> change(@RequestBody MultipartFile file,@RequestParam int candidateId) {
         CandidateImage candidateImage = new CandidateImage();
         Candidate candidate = new Candidate();
         candidate.setId(candidateId);
         candidateImage.setCandidate(candidate);
-        return ResponseEntity.ok(this.candidateImageService.add(candidateImage,file));
+        return ResponseEntity.ok(this.candidateImageService.change(candidateImage,file));
+    }
+
+    @PostMapping(value = "/delete")
+    public ResponseEntity<?> delete(@RequestParam int candidateId) {
+        return ResponseEntity.ok(this.candidateImageService.delete(candidateId));
     }
 
 
@@ -34,4 +39,10 @@ public class CandidateImagesController {
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(this.candidateImageService.getAll());
     }
+
+    @GetMapping("/getByCandidateIdAndNotDeleted")
+    public ResponseEntity<?> getByCandidateIdAndNotDeleted(@RequestParam int candidateId){
+        return ResponseEntity.ok(this.candidateImageService.getByCandidateIdAndNotDeleted(candidateId));
+    }
+
 }
