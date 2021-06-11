@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import {
   Button,
   Checkbox,
+  Dropdown,
   Input,
   Label,
   Modal,
@@ -44,7 +45,7 @@ export default function AddJobPostingModal({ triggerButton }) {
       openPositionCount: "",
       applicationDeadline: "",
       description: "",
-      isRemote: "",
+      isRemote: false,
     },
     validationSchema: addJobPostingSchema,
     onSubmit: (values) => {
@@ -53,8 +54,6 @@ export default function AddJobPostingModal({ triggerButton }) {
       jobPostingService.add(values).then((result) => console.log(result));
     },
   });
-
-  const testSubmit = () => {};
 
   ///////////////////////////////
   const [open, setOpen] = useState(false);
@@ -91,21 +90,25 @@ export default function AddJobPostingModal({ triggerButton }) {
     fetchEmploymentTypes();
   }, []);
 
-  // const jobPositionsOptions = jobPositions.map((jobPosition, index) => ({
-  //   key: index,
-  //   text: jobPosition.name,
-  //   value: jobPosition.id,
-  // }));
-  //////////////////////////////
 
-  //////////////////////////////
-  // const citiesOptions = cities.map((city, index) => ({
-  //   key: index,
-  //   text: city.name,
-  //   value: city.name,
-  // }));
-  //////////////////////////////
+  const jobPositionsOptions = jobPositions.map((jobPosition, index) => ({
+    key: index,
+    text: jobPosition.name,
+    value: jobPosition.id,
+  }));
+  const citiesOptions = cities.map((city, index) => ({
+    key: index,
+    text: city.name,
+    value: city.id,
+  }));
 
+  const employmentTypeOptions = employmentTypes.map(
+    (employmentType, index) => ({
+      key: index,
+      text: employmentType.name,
+      value: employmentType.id,
+    })
+  );
   const handleChangeSemantic = (value, fieldName) => {
     formik.setFieldValue(fieldName, value);
   };
@@ -125,22 +128,22 @@ export default function AddJobPostingModal({ triggerButton }) {
           <form onSubmit={formik.handleSubmit}>
             <Modal.Description>
               <div style={{ marginBottom: "1rem" }}>
-                <select
+
+                <Dropdown
                   className="width-100-percent"
+                  item
+                  placeholder="Pozisyon seçin"
+                  search
+                  selection
+                  onChange={(event, data) =>
+                    handleChangeSemantic(data.value, "jobPositionId")
+                  }
+                  onBlur={formik.onBlur}
+                  id="jobPositionId"
                   value={formik.values.jobPositionId}
-                  name="jobPositionId"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value="">Pozisyon Seçin</option>
-                  {jobPositions.map((jobPosition, index) => {
-                    return (
-                      <option key={index} value={jobPosition.id}>
-                        {jobPosition.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                  options={jobPositionsOptions}
+                />
+
                 {formik.errors.jobPositionId &&
                   formik.touched.jobPositionId && (
                     <p className="font-size-sm font-color-red">
@@ -149,22 +152,20 @@ export default function AddJobPostingModal({ triggerButton }) {
                   )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <select
+                <Dropdown
                   className="width-100-percent"
+                  item
+                  placeholder="Şehir seçin"
+                  search
+                  selection
+                  onChange={(event, data) =>
+                    handleChangeSemantic(data.value, "cityId")
+                  }
+                  onBlur={formik.onBlur}
+                  id="cityId"
                   value={formik.values.cityId}
-                  name="cityId"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value="">Şehir seçin</option>
-                  {cities.map((city, index) => {
-                    return (
-                      <option key={index} value={city.id}>
-                        {city.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                  options={citiesOptions}
+                />
                 {formik.errors.cityId && formik.touched.cityId && (
                   <p className="font-size-sm font-color-red">
                     {formik.errors.cityId}
@@ -172,22 +173,20 @@ export default function AddJobPostingModal({ triggerButton }) {
                 )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <select
+                <Dropdown
                   className="width-100-percent"
+                  item
+                  placeholder="İstihdam türü seçin"
+                  search
+                  selection
+                  onChange={(event, data) =>
+                    handleChangeSemantic(data.value, "employmentTypeId")
+                  }
+                  onBlur={formik.onBlur}
+                  id="employmentTypeId"
                   value={formik.values.employmentTypeId}
-                  name="employmentTypeId"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value="">İstihdam türü seçin</option>
-                  {employmentTypes.map((employmentType, index) => {
-                    return (
-                      <option key={index} value={employmentType.id}>
-                        {employmentType.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                  options={employmentTypeOptions}
+                />
                 {formik.errors.employmentTypeId &&
                   formik.touched.employmentTypeId && (
                     <p className="font-size-sm font-color-red">
@@ -325,7 +324,6 @@ export default function AddJobPostingModal({ triggerButton }) {
                     positive
                     type="submit"
                     style={{ marginLeft: "20px" }}
-                    onClick={testSubmit}
                   />
                 </div>
               </div>
@@ -336,42 +334,3 @@ export default function AddJobPostingModal({ triggerButton }) {
     </div>
   );
 }
-
-/* <Dropdown
-item
-placeholder="Pozisyon seçin"
-search
-selection
-onChange={formik.handleChange}
-onBlur={formik.onBlur}
-id="jobPosition"
-name="jobPosition"
-value={formik.values.jobPosition}
-/>
-
-<Dropdown
-                  placeholder="Şehir seç"
-                  fluid
-                  search
-                  selection
-                  options={citiesOptions}
-                /> */
-/* <DatePicker
-                    style={{ width: 180 }}
-                    date={values.dueDate}
-                    mode="date"
-                    format="YYYY-MM-DD"
-                    minDate={Date.now.toString()}
-                    maxDate="2050-06-01"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    showIcon={false}
-                    customStyles={{
-                      dateInput: {
-                        marginLeft: 0,
-                        borderColor: "#fff",
-                      },
-                    }}
-                    onDateChange={(date) => setFieldValue("dueDate", date)}
-                    onTouch={setFieldTouched}
-                  /> */

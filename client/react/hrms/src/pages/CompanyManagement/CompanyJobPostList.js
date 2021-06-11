@@ -74,7 +74,7 @@ export default function CompanyJobPostList() {
               </Table.Cell>
               <Table.Cell>{jobPosting.publishedAt}</Table.Cell>
               <Table.Cell>{jobPosting.applicationDeadline}</Table.Cell>
-              <Table.Cell>{jobPosting.employmentTypes?.name}</Table.Cell>
+              <Table.Cell>{jobPosting.employmentType?.name}</Table.Cell>
               {jobPosting.isRemote ? (
                 <Table.Cell textAlign="center">
                   <Icon color="green" name="checkmark" size="large" />
