@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,7 +52,13 @@ public class JobPostingManager implements JobPostingService {
     }
 
     @Override
-    public DataResult<List<JobPosting>> getAllByEmployer(int employerId) {
-        return new SuccessDataResult<>(this.jobPostingDao.getAllByEmployer(employerId));
+    public DataResult<List<JobPosting>> getAllByEmployerId(int employerId) {
+        return new SuccessDataResult<>(this.jobPostingDao.getAllByEmployerId(employerId));
     }
+
+    @Override
+    public DataResult<List<JobPosting>> getAllByIsConfirmed(boolean isConfirmed) {
+        return new SuccessDataResult<>(this.jobPostingDao.getAllByJobPostingConfirmation_IsConfirmed(isConfirmed));
+    }
+
 }
