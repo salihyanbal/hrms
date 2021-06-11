@@ -1,0 +1,76 @@
+.job-post {
+  padding: 8px;
+}
+
+.job-post .company-image {
+  float: left;
+  padding-top: 8px;
+  margin-right: 20px;
+}
+
+.job-post .job-informations {
+  display: inline-block;
+}
+
+.job-post .job-informations .published-at {
+  font-weight: 100;
+  font-style: normal;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.job-post .job-informations .job-position div {
+  color: #0a68cc;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+}
+
+.job-post .job-informations .job-position div:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.job-post .job-informations .job-position {
+  margin-bottom: 3px;
+}
+
+.job-post .job-informations .city-name span {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.job-post .job-informations .company-name div {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+}
+
+.job-post .job-informations .company-name div:hover {
+  text-decoration: underline;
+  color: #0a68cc;
+  cursor: pointer;
+}

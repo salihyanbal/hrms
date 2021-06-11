@@ -1,0 +1,80 @@
+.job-information-card {
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow: auto !important;
+  padding-bottom: 15px;
+  border-bottom: 1.5px solid #dededf;
+}
+
+.job-information-card .company-image {
+  float: left;
+  margin-right: 25px;
+}
+
+.job-information-card .job-informations {
+  float: left;
+}
+
+.job-information-card .job-informations .job-position span {
+  color: #000000;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.job-information-card .job-informations .job-position span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.job-information-card .job-informations .company-informations {
+  float: left !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1rem;
+  margin-top: 7px;
+  line-height: 1.75;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+}
+
+.job-information-card .job-informations .company-informations span {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  text-decoration: none;
+}
+
+.job-information-card .job-informations .company-informations span:hover {
+  text-decoration: underline;
+  color: #000000;
+  cursor: pointer;
+}
+
+.job-information-card .job-informations .company-informations span:visited {
+  color: none;
+}
+
+.job-information-card .job-informations .company-informations span {
+  font-size: 0.85rem;
+}
+
+.job-information-card .job-informations .published-at {
+  float: left;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+}

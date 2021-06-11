@@ -1,44 +1,74 @@
-import React from "react";
-import { Menu, Button, Container, Input, Icon } from 'semantic-ui-react'
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { NavLink } from "react-router-dom";
+import { Menu, Button, Container, Input, Icon } from "semantic-ui-react";
+import SignedIn from "./SignedIn";
+import SignedOut from "./SignedOut";
 
 export default function Navi() {
-    return (
-        <div>
-            <Menu size="small" inverted fixed="top">
-                <Container>
-                    <Menu.Item>
-                        <Button icon labelPosition='left'>
-                            <Icon name='home' />
-                                Ana sayfa
-                            </Button>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Button icon labelPosition='left'>
-                            <Icon name='list' />
-                                İş ilanları
-                            </Button>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Input className='icon' icon='search' placeholder='Ara...' style={{ minWidth: "20em" }} size="large" />
-                    </Menu.Item>
-                    <Menu.Menu position="right">
-                        <Menu.Item>
-                            <Button.Group>
-                                <Button>Bize katıl</Button>
-                                <Button.Or />
-                                <Button positive>Oturum aç</Button>
-                            </Button.Group>
-                        </Menu.Item>
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const history = useHistory();
 
-                        <Menu.Item>
-                            <Button icon labelPosition='left'>
-                                <Icon name='user' />
-                                Profil
-                            </Button>
-                        </Menu.Item>
-                    </Menu.Menu>
-                </Container>
-            </Menu>
-        </div>
-    );
+  function handleSignOut() {
+    setIsAuthenticated(false);
+    history.push("/");
+  }
+
+  function handleSignIn() {
+    setIsAuthenticated(true);
+  }
+
+  return (
+    <div>
+      <Menu size="small" inverted fixed="top">
+        <Container>
+          <Menu.Item>
+            <Button icon labelPosition="left">
+              <Icon name="home" />
+              Ana Sayfa
+            </Button>
+          </Menu.Item>
+          <Menu.Item>
+            <Button icon labelPosition="left">
+              <Icon name="list" />
+              İş İlanları
+            </Button>
+          </Menu.Item>
+          <Menu.Item>
+            <Input
+              className="icon"
+              icon="search"
+              placeholder="Ara..."
+              style={{ minWidth: "20em" }}
+              size="large"
+            />
+          </Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Button icon labelPosition="left" as={NavLink} to="/admin">
+                <Icon name="briefcase" />
+                Site Yönetimi
+              </Button>
+            </Menu.Item>
+            <Menu.Item>
+              <Button
+                icon
+                labelPosition="left"
+                as={NavLink}
+                to="/companymanagement"
+              >
+                <Icon name="building outline" />
+                Şirket Yönetimi
+              </Button>
+            </Menu.Item>
+            {isAuthenticated ? (
+              <SignedIn signOut={handleSignOut} />
+            ) : (
+              <SignedOut signIn={handleSignIn} />
+            )}
+          </Menu.Menu>
+        </Container>
+      </Menu>
+    </div>
+  );
 }

@@ -1,0 +1,10 @@
+body {
+  overflow: hidden;
+  background-color: #f3f2ef;
+}
+
+.ui.grid > .column:not(.row),
+.ui.grid > .row > .column {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
