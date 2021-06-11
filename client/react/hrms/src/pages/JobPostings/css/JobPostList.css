@@ -1,0 +1,12 @@
+.job-postings {
+  overflow-y: scroll !important;
+  height: calc(100vh - 5.2rem);
+  border-right: 1px solid #dededf;
+  border-top: 1px solid #dededf;
+  background-color: #ffffff;
+}
+
+.job-postings-table {
+  border-right: none !important;
+  border-top: none !important;
+}

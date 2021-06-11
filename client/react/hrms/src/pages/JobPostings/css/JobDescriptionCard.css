@@ -1,4 +1,5 @@
-.job-description-card {
+.job-description {
   width: 100% !important;
-  margin-top: 1rem !important;
+  text-align: left;
+  padding: 16px !important;
 }

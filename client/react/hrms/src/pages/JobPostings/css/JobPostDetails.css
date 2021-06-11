@@ -1,0 +1,5 @@
+.job-post-details {
+  height: calc(100vh - 5.2rem);
+  background-color: #ffffff;
+  overflow-y: scroll !important;
+}
