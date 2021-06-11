@@ -10,3 +10,53 @@ a.ui.card {
   text-decoration: none;
   color: black !important;
 }
+
+.scroll-bar::-webkit-scrollbar-track {
+  background-clip: content-box !important;
+}
+
+.scroll-bar::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: rgb(224, 225, 226) !important;
+  border-radius: 5px !important;
+  height: 3px !important;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+  background: none !important;
+}
+
+.overflow-scroll {
+  overflow-x: scroll !important;
+}
+
+.scroll-height {
+  height: calc(100vh - 5.2rem);
+}
+
+body {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
+    Lucida Grande, Helvetica, Arial, sans-serif;
+}
+
+.width-100-percent {
+  width: 100% !important;
+}
+
+.width-40-percent {
+  width: 40%;
+}
+
+.width-30-percent {
+  width: 30%;
+}
+
+.display-inline-block {
+  display: inline-block;
+}
