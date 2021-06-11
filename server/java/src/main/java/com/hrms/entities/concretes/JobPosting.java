@@ -1,14 +1,16 @@
 package com.hrms.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -38,12 +40,14 @@ public class JobPosting {
     @NotBlank
     private int openPositionCount;
 
+    @Column(name = "is_remote")
+    private Boolean isRemote;
+
     @Column(name = "published_at")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate publishedAt;
 
     @Column(name = "application_deadline")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate applicationDeadline;
 
     @Column(name = "is_active")
@@ -61,4 +65,11 @@ public class JobPosting {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @ManyToOne()
+    @JoinColumn(name = "employment_type_id")
+    private EmploymentType employmentType;
+
+    @OneToOne(mappedBy = "jobPosting",fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private JobPostingConfirmation jobPostingConfirmation;
 }

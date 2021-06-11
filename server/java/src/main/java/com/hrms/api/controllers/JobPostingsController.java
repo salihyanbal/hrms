@@ -1,11 +1,9 @@
 package com.hrms.api.controllers;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrms.business.abstracts.JobPostingService;
 import com.hrms.core.utilities.results.DataResult;
 import com.hrms.core.utilities.results.Result;
 import com.hrms.entities.concretes.JobPosting;
-import org.apache.james.mime4j.dom.datetime.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +25,7 @@ public class JobPostingsController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody JobPosting jobPosting){
+    public Result add(@RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) JobPosting jobPosting){
         return this.jobPostingService.add(jobPosting);
     }
 
@@ -51,9 +49,14 @@ public class JobPostingsController {
         return this.jobPostingService.getAllByApplicationDeadline(date);
     }
 
-    @GetMapping("/getallbyemployer")
-    public DataResult<List<JobPosting>> getAllByEmployer(@RequestParam int employerId){
-        return this.jobPostingService.getAllByEmployer(employerId);
+    @GetMapping("/getallbyemployerid")
+    public DataResult<List<JobPosting>> getAllByEmployerId(@RequestParam int employerId){
+        return this.jobPostingService.getAllByEmployerId(employerId);
+    }
+
+    @GetMapping("/getallbyisconfirmed")
+    public ResponseEntity<?> getAllByIsConfirmed(@RequestParam boolean isConfirmed){
+        return ResponseEntity.ok(this.jobPostingService.getAllByIsConfirmed(isConfirmed));
     }
 
 }
