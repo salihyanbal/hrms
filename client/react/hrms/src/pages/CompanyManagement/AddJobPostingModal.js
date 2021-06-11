@@ -90,6 +90,7 @@ export default function AddJobPostingModal({ triggerButton }) {
     fetchEmploymentTypes();
   }, []);
 
+
   const jobPositionsOptions = jobPositions.map((jobPosition, index) => ({
     key: index,
     text: jobPosition.name,
@@ -127,6 +128,7 @@ export default function AddJobPostingModal({ triggerButton }) {
           <form onSubmit={formik.handleSubmit}>
             <Modal.Description>
               <div style={{ marginBottom: "1rem" }}>
+
                 <Dropdown
                   className="width-100-percent"
                   item
@@ -332,24 +334,3 @@ export default function AddJobPostingModal({ triggerButton }) {
     </div>
   );
 }
-
-/*  */
-/* <DatePicker
-                    style={{ width: 180 }}
-                    date={values.dueDate}
-                    mode="date"
-                    format="YYYY-MM-DD"
-                    minDate={Date.now.toString()}
-                    maxDate="2050-06-01"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    showIcon={false}
-                    customStyles={{
-                      dateInput: {
-                        marginLeft: 0,
-                        borderColor: "#fff",
-                      },
-                    }}
-                    onDateChange={(date) => setFieldValue("dueDate", date)}
-                    onTouch={setFieldTouched}
-                  /> */
