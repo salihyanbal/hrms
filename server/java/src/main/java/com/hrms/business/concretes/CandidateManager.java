@@ -62,7 +62,7 @@ public class CandidateManager implements CandidateService {
         candidateResumeDto.setCandidate(this.getById(candidateId).getData());
         candidateResumeDto.setCandidateEducations(this.candidateEducationService.getAllByCandidateIdOrderByGraduationYear(candidateId).getData());
         candidateResumeDto.setCandidateExperiences(this.candidateExperienceService.getAllByCandidateIdOrderByLeaveDate(candidateId).getData());
-        candidateResumeDto.setCandidateImages(this.candidateImageService.getAllByCandidateId(candidateId).getData());
+        candidateResumeDto.setCandidateImage(this.candidateImageService.getByCandidateIdAndNotDeleted(candidateId).getData());
         candidateResumeDto.setCandidateLanguages(this.candidateLanguageService.getAllByCandidateId(candidateId).getData());
         candidateResumeDto.setCandidateLinks(this.candidateLinkService.getAllByCandidateId(candidateId).getData());
         candidateResumeDto.setCandidateSkills(this.candidateSkillService.getAllByCandidateId(candidateId).getData());

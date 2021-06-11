@@ -12,9 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CandidateResumeDto {
     private Candidate candidate;
+    private CandidateImage candidateImage;
     private List<CandidateEducation> candidateEducations;
     private List<CandidateExperience> candidateExperiences;
-    private List<CandidateImage> candidateImages;
     private List<CandidateLanguage> candidateLanguages;
     private List<CandidateLink> candidateLinks;
     private List<CandidateSkill> candidateSkills;

@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface CandidateImageService {
     Result add(CandidateImage candidateImage);
-    Result add(CandidateImage candidateImage, MultipartFile file);
+    Result change(CandidateImage candidateImage, MultipartFile file);
+    Result delete(int candidateId);
     DataResult<List<CandidateImage>> getAll();
-    DataResult<List<CandidateImage>> getAllByCandidateId(int candidateId);
+    DataResult<CandidateImage> getByCandidateIdAndNotDeleted(int candidateId);
 }

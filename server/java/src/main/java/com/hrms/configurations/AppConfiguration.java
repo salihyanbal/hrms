@@ -9,15 +9,18 @@ import com.hrms.core.utilities.uploadService.imageUpload.cloudinary.CloudinaryIm
 import com.hrms.core.utilities.mail.MailManager;
 import com.hrms.core.utilities.mail.MailService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.util.Map;
 
 @Configuration
 public class AppConfiguration {
 
-    Map<String, String> env = System.getenv();
+    @Autowired
+    private Environment env;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -37,9 +40,9 @@ public class AppConfiguration {
     @Bean
     public Cloudinary cloudinaryService(){
         return new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", env.get("cloudinary.cloud_name"),
-                "api_key", env.get("cloudinary.api_key"),
-                "api_secret", env.get("cloudinary.api_secret")));
+                "cloud_name", env.getProperty("cloudinary.cloud_name"),
+                "api_key", env.getProperty("cloudinary.api_key"),
+                "api_secret", env.getProperty("cloudinary.api_secret")));
     }
 
     @Bean

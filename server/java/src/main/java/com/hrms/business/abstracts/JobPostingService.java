@@ -5,7 +5,6 @@ import com.hrms.core.utilities.results.Result;
 import com.hrms.entities.concretes.JobPosting;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface JobPostingService {
@@ -15,5 +14,6 @@ public interface JobPostingService {
     DataResult<JobPosting> getById(int id);
     DataResult<List<JobPosting>> getAll();
     DataResult<List<JobPosting>> getAllByApplicationDeadline(LocalDate date);
-    DataResult<List<JobPosting>> getAllByEmployer(int employerId);
+    DataResult<List<JobPosting>> getAllByEmployerId(int employerId);
+    DataResult<List<JobPosting>> getAllByIsConfirmed(boolean isConfirmed);
 }
