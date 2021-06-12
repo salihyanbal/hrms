@@ -24,15 +24,6 @@ export default class JobPostingService {
   }
 
   add(jobPosting) {
-    jobPosting.employer = {};
-    jobPosting.employer.id = Number(jobPosting.employerId);
-    jobPosting.city = {};
-    jobPosting.city.id = Number(jobPosting.cityId);
-    jobPosting.employmentType = {};
-    jobPosting.employmentType.id = Number(jobPosting.employmentTypeId);
-    jobPosting.jobPosition = {};
-    jobPosting.jobPosition.id = Number(jobPosting.jobPositionId);
-
     return axios.post("http://localhost:8080/api/jobpostings/add", jobPosting);
   }
 }

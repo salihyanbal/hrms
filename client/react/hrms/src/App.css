@@ -60,3 +60,7 @@ body {
 .display-inline-block {
   display: inline-block;
 }
+
+textarea {
+  resize: none;
+}

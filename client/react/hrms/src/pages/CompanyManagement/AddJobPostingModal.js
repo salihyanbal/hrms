@@ -7,6 +7,7 @@ import {
   Dropdown,
   Input,
   Label,
+  Message,
   Modal,
   TextArea,
 } from "semantic-ui-react";
@@ -20,45 +21,16 @@ import EmploymentTypeService from "../../services/employmentTypeService";
 
 export default function AddJobPostingModal({ triggerButton }) {
   let jobPostingService = new JobPostingService();
-  const addJobPostingSchema = Yup.object().shape({
-    jobPositionId: Yup.number().required("Doldurulması gerekiyor!"),
-    cityId: Yup.number("Doldurulması gerekiyor!"),
-    employmentTypeId: Yup.number().required("Doldurulması gerekiyor!"),
-    minSalary: Yup.number().min(0, "Maaş 0'dan küçük olamaz!"),
-    maxSalary: Yup.number().min(0, "Maaş 0'dan küçük olamaz!"),
-    openPositionCount: Yup.number()
-      .min(0, "Açık pozisyon sayısı 0'dan küçük olamaz!")
-      .required("Doldurulması gerekiyor!"),
-    applicationDeadline: Yup.date()
-      .nullable()
-      .required("Doldurulması gerekiyor!"),
-    jobDescription: Yup.string().required("Doldurulması gerekiyor!"),
-  });
 
-  const formik = useFormik({
-    initialValues: {
-      jobPositionId: "",
-      cityId: "",
-      employmentTypeId: "",
-      minSalary: "",
-      maxSalary: "",
-      openPositionCount: "",
-      applicationDeadline: "",
-      description: "",
-      isRemote: false,
-    },
-    validationSchema: addJobPostingSchema,
-    onSubmit: (values) => {
-      values.employerId = 3;
-      console.log(values);
-      jobPostingService.add(values).then((result) => console.log(result));
-    },
-  });
+  const [jobPositions, setJobPositions] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [employmentTypes, setEmploymentTypes] = useState([]);
 
-  ///////////////////////////////
-  const [open, setOpen] = useState(false);
-
-  //////////////////////////////
+  useEffect(() => {
+    fetchJobPositions();
+    fetchCities();
+    fetchEmploymentTypes();
+  }, []);
 
   const fetchEmploymentTypes = () => {
     let employmentTypeService = new EmploymentTypeService();
@@ -79,17 +51,6 @@ export default function AddJobPostingModal({ triggerButton }) {
     cityService.getAll().then((result) => setCities(result.data.data));
   };
 
-  /////
-  const [jobPositions, setJobPositions] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [employmentTypes, setEmploymentTypes] = useState([]);
-
-  useEffect(() => {
-    fetchJobPositions();
-    fetchCities();
-    fetchEmploymentTypes();
-  }, []);
-
   const jobPositionsOptions = jobPositions.map((jobPosition, index) => ({
     key: index,
     text: jobPosition.name,
@@ -108,6 +69,71 @@ export default function AddJobPostingModal({ triggerButton }) {
       value: employmentType.id,
     })
   );
+
+  const addJobPostingSchema = Yup.object().shape({
+    jobPositionId: Yup.number().required("İş pozisyonu seçilmesi gerekiyor!"),
+    cityId: Yup.number().required("Şehir seçilmesi gerekiyor!"),
+    employmentTypeId: Yup.number().required(
+      "İstihdam türü seçilmesi gerekiyor!"
+    ),
+    minSalary: Yup.number().min(0, "En az maaş 0'dan küçük olamaz!"),
+    maxSalary: Yup.number().min(0, "En çok maaş 0'dan küçük olamaz!"),
+    openPositionCount: Yup.number()
+      .min(0, "Açık pozisyon sayısı 0'dan küçük olamaz!")
+      .required("Açık pozisyon sayısı boş bırakılamaz!"),
+    applicationDeadline: Yup.date()
+      .nullable()
+      .required("Son başvuru tarihi seçilmesi gerekiyor!"),
+    jobDescription: Yup.string().required("İş açıklaması boş bırakılamaz!"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      jobPositionId: "",
+      cityId: "",
+      employmentTypeId: "",
+      minSalary: "",
+      maxSalary: "",
+      openPositionCount: "",
+      applicationDeadline: "",
+      jobDescription: "",
+      isRemote: false,
+    },
+    validationSchema: addJobPostingSchema,
+    onSubmit: (values) => {
+      let jobPosting = {
+        jobPosition: {
+          id: values.jobPositionId,
+        },
+        city: {
+          id: values.cityId,
+        },
+        employmentType: {
+          id: values.employmentTypeId,
+        },
+        employer: {
+          id: 3, // fakeid
+        },
+        minSalary: values.minSalary,
+        maxSalary: values.maxSalary,
+        openPositionCount: values.openPositionCount,
+        applicationDeadline: values.applicationDeadline,
+        jobDescription: values.jobDescription,
+        isRemote: values.isRemote,
+      };
+      jobPostingService.add(jobPosting).then((result) => console.log(result));
+    },
+  });
+
+  const handleFormErrorMessages = () => {
+    let errorMessages = Object.keys(formik.errors).map((key, i) => {
+      return formik.errors[key];
+    });
+    return errorMessages;
+  };
+
+  const [open, setOpen] = useState(false);
+
   const handleChangeSemantic = (value, fieldName) => {
     formik.setFieldValue(fieldName, value);
   };
@@ -127,27 +153,31 @@ export default function AddJobPostingModal({ triggerButton }) {
           <form onSubmit={formik.handleSubmit}>
             <Modal.Description>
               <div style={{ marginBottom: "1rem" }}>
+                {handleFormErrorMessages().length > 0 && (
+                  <Message
+                    error
+                    header="Aşağıdaki uyarıları dikkate alınız!"
+                    list={handleFormErrorMessages()}
+                  />
+                )}
+              </div>
+              <div style={{ marginBottom: "1rem" }}>
                 <Dropdown
                   className="width-100-percent"
                   item
                   placeholder="Pozisyon seçin"
                   search
                   selection
-                  onChange={(event, data) =>
-                    handleChangeSemantic(data.value, "jobPositionId")
-                  }
+                  error={formik.errors.jobPositionId ? true : false}
+                  onChange={(event, data) => {
+                    handleChangeSemantic(data.value, "jobPositionId");
+                    handleFormErrorMessages();
+                  }}
                   onBlur={formik.onBlur}
                   id="jobPositionId"
                   value={formik.values.jobPositionId}
                   options={jobPositionsOptions}
                 />
-
-                {formik.errors.jobPositionId &&
-                  formik.touched.jobPositionId && (
-                    <p className="font-size-sm font-color-red">
-                      {formik.errors.jobPositionId}
-                    </p>
-                  )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <Dropdown
@@ -155,42 +185,35 @@ export default function AddJobPostingModal({ triggerButton }) {
                   item
                   placeholder="Şehir seçin"
                   search
+                  error={formik.errors.cityId ? true : false}
                   selection
-                  onChange={(event, data) =>
-                    handleChangeSemantic(data.value, "cityId")
-                  }
+                  onChange={(event, data) => {
+                    handleChangeSemantic(data.value, "cityId");
+                    handleFormErrorMessages();
+                  }}
                   onBlur={formik.onBlur}
                   id="cityId"
                   value={formik.values.cityId}
                   options={citiesOptions}
                 />
-                {formik.errors.cityId && formik.touched.cityId && (
-                  <p className="font-size-sm font-color-red">
-                    {formik.errors.cityId}
-                  </p>
-                )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <Dropdown
                   className="width-100-percent"
                   item
+                  error={formik.errors.employmentTypeId ? true : false}
                   placeholder="İstihdam türü seçin"
                   search
                   selection
-                  onChange={(event, data) =>
-                    handleChangeSemantic(data.value, "employmentTypeId")
-                  }
+                  onChange={(event, data) => {
+                    handleChangeSemantic(data.value, "employmentTypeId");
+                    handleFormErrorMessages();
+                  }}
                   onBlur={formik.onBlur}
                   id="employmentTypeId"
                   value={formik.values.employmentTypeId}
                   options={employmentTypeOptions}
                 />
-                {formik.errors.employmentTypeId &&
-                  formik.touched.employmentTypeId && (
-                    <p className="font-size-sm font-color-red">
-                      {formik.errors.employmentTypeId}
-                    </p>
-                  )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <div
@@ -201,40 +224,36 @@ export default function AddJobPostingModal({ triggerButton }) {
                     labelPosition="right"
                     type="number"
                     placeholder="En az maaş"
-                    error={Boolean(formik.errors.description)}
+                    error={formik.errors.minSalary ? true : false}
                     value={formik.values.minSalary}
                     name="minSalary"
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      handleFormErrorMessages();
+                    }}
                     onBlur={formik.handleBlur}
                   >
                     <input />
                     <Label>₺</Label>
                   </Input>
-                  {formik.errors.minSalary && formik.touched.minSalary && (
-                    <p className="font-size-sm font-color-red">
-                      {formik.errors.minSalary}
-                    </p>
-                  )}
                 </div>
                 <div className="width-40-percent display-inline-block">
                   <Input
                     labelPosition="right"
                     type="number"
                     placeholder="En fazla maaş"
-                    error={Boolean(formik.errors.description)}
+                    error={formik.errors.maxSalary ? true : false}
                     value={formik.values.maxSalary}
                     name="maxSalary"
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      handleFormErrorMessages();
+                    }}
                     onBlur={formik.handleBlur}
                   >
                     <input />
                     <Label>₺</Label>
                   </Input>
-                  {formik.errors.maxSalary && formik.touched.maxSalary && (
-                    <p className="font-size-sm font-color-red">
-                      {formik.errors.maxSalary}
-                    </p>
-                  )}
                 </div>
               </div>
               <div style={{ marginBottom: "1rem" }}>
@@ -244,39 +263,30 @@ export default function AddJobPostingModal({ triggerButton }) {
                 >
                   <Input
                     className="width-100-percent"
-                    id="openPositionCount"
                     name="openPositionCount"
-                    error={Boolean(formik.errors.openPositionCount)}
-                    onChange={formik.handleChange}
+                    error={formik.errors.openPositionCount ? true : false}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      handleFormErrorMessages();
+                    }}
                     value={formik.values.openPositionCount}
                     onBlur={formik.handleBlur}
                     type="number"
                     placeholder="Açık pozisyon sayısı"
                   />
-                  {formik.errors.openPositionCount &&
-                    formik.touched.openPositionCount && (
-                      <p className="font-size-sm font-color-red">
-                        {formik.errors.openPositionCount}
-                      </p>
-                    )}
                 </div>
                 <div className="display-inline-block" style={{ width: "46%" }}>
                   <SemanticDatepicker
-                    error={Boolean(formik.errors.applicationDeadline)}
-                    onChange={(event, data) =>
-                      handleChangeSemantic(data.value, "applicationDeadline")
-                    }
+                    error={formik.errors.applicationDeadline ? true : false}
+                    onChange={(event, data) => {
+                      handleChangeSemantic(data.value, "applicationDeadline");
+                      handleFormErrorMessages();
+                    }}
                     value={formik.values.applicationDeadline}
                     onBlur={formik.handleBlur}
                     name="applicationDeadline"
                     placeholder="Son başvuru tarihi"
                   />
-                  {formik.errors.applicationDeadline &&
-                    formik.touched.applicationDeadline && (
-                      <p className="font-size-sm font-color-red">
-                        {formik.errors.applicationDeadline}
-                      </p>
-                    )}
                 </div>
               </div>
               <div style={{ marginBottom: "1rem" }}>
@@ -284,18 +294,14 @@ export default function AddJobPostingModal({ triggerButton }) {
                   placeholder="İş açıklaması (tüm detaylarıyla)"
                   className="width-100-percent"
                   style={{ minHeight: 100 }}
-                  error={Boolean(formik.errors.jobDescription).toString()}
                   value={formik.values.jobDescription}
                   name="jobDescription"
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                    handleFormErrorMessages();
+                  }}
                   onBlur={formik.handleBlur}
                 />
-                {formik.errors.jobDescription &&
-                  formik.touched.jobDescription && (
-                    <p className="font-size-sm font-color-red">
-                      {formik.errors.jobDescription}
-                    </p>
-                  )}
               </div>
               <div
                 style={{
