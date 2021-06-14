@@ -5,10 +5,9 @@ export default class JobPostingService {
     return axios.get("http://localhost:8080/api/jobpostings/getall");
   }
 
-  getAllByIsConfirmed(isConfirmed) {
+  getAllApprovedStatus() {
     return axios.get(
-      "http://localhost:8080/api/jobpostings/getallbyisconfirmed?isConfirmed=" +
-        isConfirmed
+      "http://localhost:8080/api/jobpostings/getallapprovedstatus"
     );
   }
 

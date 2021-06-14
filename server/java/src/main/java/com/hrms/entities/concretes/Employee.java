@@ -29,5 +29,5 @@ public class Employee extends User{
 
     @OneToMany(mappedBy = "employee")
     @JsonIgnore()
-    private List<JobPostingConfirmation> jobPostingConfirmations;
+    private List<JobPostingStatus> jobPostingStatuses;
 }

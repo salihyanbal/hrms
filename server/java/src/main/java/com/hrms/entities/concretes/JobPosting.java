@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Data
 @Entity
@@ -50,8 +49,8 @@ public class JobPosting {
     @Column(name = "application_deadline")
     private LocalDate applicationDeadline;
 
-    @Column(name = "is_active")
-    private boolean isActive;
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
 
     @ManyToOne()
     @JoinColumn(name = "job_position_id")
@@ -69,7 +68,7 @@ public class JobPosting {
     @JoinColumn(name = "employment_type_id")
     private EmploymentType employmentType;
 
-    @OneToOne(mappedBy = "jobPosting",fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private JobPostingConfirmation jobPostingConfirmation;
+    @OneToMany(mappedBy = "jobPosting",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<JobPostingStatus> jobPostingStatuses;
 }

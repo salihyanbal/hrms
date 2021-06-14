@@ -26,21 +26,21 @@ export default function JobInformationCard({ jobPost }) {
 
   return (
     <div className="job-information-card">
-      <div class="company-image">
+      <div className="company-image">
         <img src={defaultImage} alt="" width="122" height="122" />
       </div>
       <div style={{ display: "flex" }}>
-        <div class="job-informations">
-          <div class="job-position">
+        <div className="job-informations">
+          <div className="job-position">
             <span>{jobPost.jobPosition.name}</span>
           </div>
-          <div class="company-informations">
-            <span class="company-name">{jobPost.employer.companyName}</span>
+          <div className="company-informations">
+            <span className="company-name">{jobPost.employer.companyName}</span>
             &nbsp; | &nbsp;
-            <span class="city-name">{jobPost.city.name}</span>
+            <span className="city-name">{jobPost.city.name}</span>
           </div>
           <div>
-            <time datetime={jobPost.publishedAt} class="published-at">
+            <time dateTime={jobPost.publishedAt} className="published-at">
               {getHowLongAgo(jobPost.publishedAt)} yayınlandı.
             </time>
           </div>

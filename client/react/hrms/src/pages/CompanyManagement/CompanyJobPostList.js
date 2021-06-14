@@ -5,7 +5,7 @@ import AddJobPostingModal from "./AddJobPostingModal";
 
 export default function CompanyJobPostList() {
   const [jobPostings, setJobPostings] = useState([]);
-  const [fakeCompanyId, setFakeCompanyId] = useState(3);
+  const [fakeCompanyId, setFakeCompanyId] = useState(1);
   useEffect(() => {
     let jobPostingService = new JobPostingService();
     jobPostingService

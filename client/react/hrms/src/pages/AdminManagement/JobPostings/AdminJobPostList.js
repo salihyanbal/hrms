@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Button, Icon, Table } from "semantic-ui-react";
+import { Icon, Table } from "semantic-ui-react";
 
 import JobPostingService from "../../../services/jobPostingService";
-import ConfirmJobPostModal from "./ConfirmJobPostModal";
+import StatusTypeService from "../../../services/statusTypeService";
+import StatusDropdown from "./StatusDropdown";
 
 export default function AdminJobPostList() {
   const [jobPostings, setJobPostings] = useState([]);
+  const [statusTypes, setStatusTypes] = useState([]);
+
   useEffect(() => {
+    fetchJobPostings();
+    fetchStatusTypes();
+  }, []);
+
+  const fetchJobPostings = () => {
     let jobPostingService = new JobPostingService();
     jobPostingService.getAll().then((result) => {
       setJobPostings(result.data.data);
     });
-  }, []);
+  };
+
+  const fetchStatusTypes = () => {
+    let statusTypeService = new StatusTypeService();
+    statusTypeService.getAll().then((result) => {
+      setStatusTypes(result.data.data);
+    });
+  };
+
+  const statusTypeOptions = statusTypes.map((statusType, index) => ({
+    key: index,
+    text: statusType.name,
+    value: statusType.id,
+  }));
 
   return (
     <section className="scroll-bar overflow-scroll scroll-height">
       <Table celled selectable structured>
         <Table.Header align="center">
           <Table.Row>
-            <Table.HeaderCell rowSpan="2"></Table.HeaderCell>
+            <Table.HeaderCell rowSpan="2">Durum</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Pozisyona</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Şehir</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Açıklama</Table.HeaderCell>
@@ -43,31 +64,12 @@ export default function AdminJobPostList() {
         <Table.Body>
           {jobPostings.map((jobPosting, i) => (
             <Table.Row key={i}>
-              {jobPosting.jobPostingConfirmation ||
-              jobPosting.jobPostingConfirmation?.confirmed ? (
-                <Table.Cell>
-                  <Button.Group>
-                    <Button icon>
-                      <Icon name="edit" />
-                    </Button>
-
-                    <Button color="red" icon>
-                      <Icon name="trash" />
-                    </Button>
-                  </Button.Group>
-                </Table.Cell>
-              ) : (
-                <Table.Cell textAlign="center">
-                  <ConfirmJobPostModal
-                    triggerButton={
-                      <Button icon color="green">
-                        <Icon name="checkmark" />
-                      </Button>
-                    }
-                    jobPosting={jobPosting}
-                  />
-                </Table.Cell>
-              )}
+              <Table.Cell>
+                <StatusDropdown
+                  statusTypeOptions={statusTypeOptions}
+                  jobPostingId={jobPosting.id}
+                />
+              </Table.Cell>
 
               <Table.Cell>{jobPosting.jobPosition.name}</Table.Cell>
               <Table.Cell>{jobPosting.city.name}</Table.Cell>

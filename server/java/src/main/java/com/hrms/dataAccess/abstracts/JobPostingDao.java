@@ -10,5 +10,12 @@ import java.util.List;
 public interface JobPostingDao extends JpaRepository<JobPosting,Integer> {
     List<JobPosting> getAllByApplicationDeadlineLessThanEqual(LocalDate date);
     List<JobPosting> getAllByEmployerId(int employerId);
-    List<JobPosting> getAllByJobPostingConfirmation_IsConfirmed(boolean isConfirmed);
+
+    @Query("From JobPosting jp " +
+            "inner join jp.jobPostingStatuses jps " +
+            "left join jps.statusType status " +
+            "where jps.id in " +
+            "(select MAX(jps.id) from JobPosting jp join jp.jobPostingStatuses jps group by jp.id) " +
+            "and status.id = :statusId")
+    List<JobPosting> getAllByStatusName(int statusId);
 }

@@ -17,27 +17,27 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="job_posting_confirmations")
-public class JobPostingConfirmation {
+@Table(name="job_posting_statuses")
+public class JobPostingStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "is_confirmed")
-    private boolean isConfirmed;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
-    @Column(name = "confirmation_date")
-    private LocalDate confirmationDate;
-
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonBackReference
+    @ManyToOne()
     @JoinColumn(name = "job_posting_id")
     private JobPosting jobPosting;
 
     @ManyToOne()
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "by_employee_id")
     private Employee employee;
+
+    @ManyToOne()
+    @JoinColumn(name = "status_type_id")
+    private StatusType statusType;
 
 }

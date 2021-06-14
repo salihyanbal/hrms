@@ -112,7 +112,7 @@ export default function AddJobPostingModal({ triggerButton }) {
           id: values.employmentTypeId,
         },
         employer: {
-          id: 3, // fakeid
+          id: 1, // fakeid
         },
         minSalary: values.minSalary,
         maxSalary: values.maxSalary,
@@ -168,6 +168,7 @@ export default function AddJobPostingModal({ triggerButton }) {
                   placeholder="Pozisyon seçin"
                   search
                   selection
+                  clearable
                   error={formik.errors.jobPositionId ? true : false}
                   onChange={(event, data) => {
                     handleChangeSemantic(data.value, "jobPositionId");
@@ -185,8 +186,9 @@ export default function AddJobPostingModal({ triggerButton }) {
                   item
                   placeholder="Şehir seçin"
                   search
-                  error={formik.errors.cityId ? true : false}
                   selection
+                  clearable
+                  error={formik.errors.cityId ? true : false}
                   onChange={(event, data) => {
                     handleChangeSemantic(data.value, "cityId");
                     handleFormErrorMessages();
@@ -201,10 +203,11 @@ export default function AddJobPostingModal({ triggerButton }) {
                 <Dropdown
                   className="width-100-percent"
                   item
-                  error={formik.errors.employmentTypeId ? true : false}
                   placeholder="İstihdam türü seçin"
                   search
                   selection
+                  clearable
+                  error={formik.errors.employmentTypeId ? true : false}
                   onChange={(event, data) => {
                     handleChangeSemantic(data.value, "employmentTypeId");
                     handleFormErrorMessages();

@@ -15,5 +15,6 @@ public interface JobPostingService {
     DataResult<List<JobPosting>> getAll();
     DataResult<List<JobPosting>> getAllByApplicationDeadline(LocalDate date);
     DataResult<List<JobPosting>> getAllByEmployerId(int employerId);
-    DataResult<List<JobPosting>> getAllByIsConfirmed(boolean isConfirmed);
+    DataResult<List<JobPosting>> getAllByStatusId(int statusId);
+/*    DataResult<List<JobPosting>> getAllByIsConfirmed(boolean isConfirmed);*/
 }

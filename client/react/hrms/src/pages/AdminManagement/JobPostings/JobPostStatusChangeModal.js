@@ -1,24 +1,35 @@
 import React, { useState } from "react";
 import { Button, Header, Modal, Icon } from "semantic-ui-react";
-import JobPostingConfirmationService from "../../../services/jobPostingConfirmationService";
+import JobPostingStatusService from "../../../services/jobPostingStatusService";
 
-export default function ConfirmJobPostModal({ triggerButton, jobPosting }) {
-  const [fakeEmployeeId, setFakeEmployeeId] = useState(4);
+export default function JobPostStatusChangeModal({
+  jobPostingId,
+  open,
+  setModalState,
+  status,
+  newStatus,
+}) {
+  const [fakeEmployeeId, setFakeEmployeeId] = useState(3);
 
-  const confirmJobPost = () => {
-    let jobPostingConfirmationService = new JobPostingConfirmationService();
-    jobPostingConfirmationService.add({
+  const setOpen = (value) => {
+    setModalState(value);
+  };
+  const confirmNewStatus = () => {
+    let jobPostingStatusService = new JobPostingStatusService();
+    jobPostingStatusService.add({
       jobPosting: {
-        id: jobPosting.id,
+        id: jobPostingId,
       },
       employee: {
         id: fakeEmployeeId,
       },
-      confirmed: true,
-      confirmationDate: new Date(Date.now()),
+      statusType: {
+        id: newStatus.value,
+      },
+      created_at: new Date(Date.now()),
     });
   };
-  const [open, setOpen] = useState(false);
+
   return (
     <div>
       <Modal
@@ -27,14 +38,16 @@ export default function ConfirmJobPostModal({ triggerButton, jobPosting }) {
         onOpen={() => setOpen(true)}
         open={open}
         size="small"
-        trigger={triggerButton}
       >
         <Header icon>
           <Icon name="checkmark" />
-          İş İlanını Onayla
+          İş ilanı durumunu değiştir
         </Header>
         <Modal.Content>
-          <p>İş ilanını onaylamak istediğine emin misin?</p>
+          <p>
+            {status?.statusType.name} durumundaki iş ilanını {newStatus.text}{" "}
+            olarak değiştirmek istediğinize emin misiniz?{" "}
+          </p>
         </Modal.Content>
         <Modal.Actions>
           <Button basic color="red" inverted onClick={() => setOpen(false)}>
@@ -45,7 +58,7 @@ export default function ConfirmJobPostModal({ triggerButton, jobPosting }) {
             inverted
             onClick={() => {
               setOpen(false);
-              confirmJobPost();
+              confirmNewStatus();
             }}
           >
             <Icon name="checkmark" /> Evet

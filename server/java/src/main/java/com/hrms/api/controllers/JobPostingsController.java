@@ -17,6 +17,19 @@ import java.util.List;
 @CrossOrigin
 public class JobPostingsController {
 
+    private enum StatusType{
+        WAITING(1),APPROVED(2), REJECTED (3);
+        private final Integer value;
+
+        StatusType(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
+
     private JobPostingService jobPostingService;
 
     @Autowired
@@ -54,9 +67,9 @@ public class JobPostingsController {
         return this.jobPostingService.getAllByEmployerId(employerId);
     }
 
-    @GetMapping("/getallbyisconfirmed")
-    public ResponseEntity<?> getAllByIsConfirmed(@RequestParam boolean isConfirmed){
-        return ResponseEntity.ok(this.jobPostingService.getAllByIsConfirmed(isConfirmed));
+    @GetMapping("/getallapprovedstatus")
+    public ResponseEntity<?> getAllApprovedStatus(){
+        return ResponseEntity.ok(this.jobPostingService.getAllByStatusId(StatusType.APPROVED.getValue()));
     }
 
 }

@@ -10,7 +10,7 @@ export default function JobPostList({ setCurrentJobPost }) {
   useEffect(() => {
     let jobPostingService = new JobPostingService();
     jobPostingService
-      .getAllByIsConfirmed(true)
+      .getAllApprovedStatus()
       .then((result) => setJobPostings(result.data.data));
   }, []);
   return (
@@ -18,8 +18,8 @@ export default function JobPostList({ setCurrentJobPost }) {
       <Table className="job-postings-table">
         <Table.Body>
           {jobPostings.map((jobPosting, i) => (
-            <Table.Row>
-              <Table.Cell key={i}>
+            <Table.Row key={i}>
+              <Table.Cell>
                 <JobPost
                   setCurrentJobPost={setCurrentJobPost}
                   jobPost={jobPosting}

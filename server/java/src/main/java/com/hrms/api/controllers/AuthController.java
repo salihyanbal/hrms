@@ -26,8 +26,8 @@ public class AuthController {
         return authService.registerForEmployer(registerForEmployerDto);
     }
 
-    @PostMapping("/registerforjobseeker")
-    public Result registerForJobSeeker(@RequestBody RegisterForCandidateDto registerForJobSeekerDto) {
+    @PostMapping("/registerforcandidate")
+    public Result registerForCandidate(@RequestBody RegisterForCandidateDto registerForJobSeekerDto) {
         return authService.registerForCandidate(registerForJobSeekerDto);
     }
 

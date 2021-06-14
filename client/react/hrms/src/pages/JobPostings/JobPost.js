@@ -27,24 +27,24 @@ export default function JobPost({ jobPost, setCurrentJobPost }) {
   }
   return (
     <div>
-      <div class="job-post">
-        <div class="company-image">
+      <div className="job-post">
+        <div className="company-image">
           <img src={defaultImage} alt="" width="64" height="64" />
         </div>
-        <div class="job-informations">
-          <div class="job-position">
+        <div className="job-informations">
+          <div className="job-position">
             <div onClick={() => setJobDetails()}>
               {jobPost.jobPosition.name}
             </div>
           </div>
-          <div class="company-name">
+          <div className="company-name">
             <div>{jobPost.employer.companyName}</div>
           </div>
-          <div class="city-name">
+          <div className="city-name">
             <span>{jobPost.city.name}</span>
           </div>
           <div>
-            <time datetime={jobPost.publishedAt} class="published-at">
+            <time dateTime={jobPost.publishedAt} className="published-at">
               {getHowLongAgo(jobPost.publishedAt)}
             </time>
           </div>
