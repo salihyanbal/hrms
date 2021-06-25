@@ -7,7 +7,8 @@ import CandidateJobPostingFavoriteService from "../../services/candidateJobPosti
 export default function JobInformationCard({ jobPost }) {
   const [fakeCandidateId, setFakeCandidateId] = useState(2);
   const [candidateFavorite, setCandidateFavorite] = useState([]);
-
+  const [startState, setStarState] = useState(false);
+  let test = 1;
   let candidateJobPostingFavoriteService =
     new CandidateJobPostingFavoriteService();
   let defaultImage =
@@ -16,8 +17,11 @@ export default function JobInformationCard({ jobPost }) {
   useEffect(() => {
     candidateJobPostingFavoriteService
       .getByCandidateIdAndJobPostingId(fakeCandidateId, jobPost.id)
-      .then((result) => setCandidateFavorite(result.data.data));
-  }, []);
+      .then((result) => {
+        setCandidateFavorite(result.data.data);
+        setStarState(result.data.data ? true : false);
+      });
+  }, [jobPost, test]);
 
   const addToFavorite = () => {
     let candidateJobPostingFavorite = {
@@ -26,13 +30,19 @@ export default function JobInformationCard({ jobPost }) {
     };
     candidateJobPostingFavoriteService
       .save(candidateJobPostingFavorite)
-      .then((result) => console.log(result));
+      .then((result) => {
+        setStarState(true);
+        console.log(result);
+      });
   };
 
   const removeFromFavorite = () => {
     candidateJobPostingFavoriteService
       .delete(candidateFavorite)
-      .then((result) => console.log(result));
+      .then((result) => {
+        setStarState(false);
+        console.log(result);
+      });
   };
 
   function getHowLongAgo(publishedAt) {
@@ -58,7 +68,7 @@ export default function JobInformationCard({ jobPost }) {
         <img src={defaultImage} alt="" width="122" height="122" />
       </div>
       <div style={{ display: "flex" }}>
-        {candidateFavorite ? (
+        {startState ? (
           <Button
             className="star-button"
             circular

@@ -23,17 +23,17 @@ export default class CandidateJobPostingFavoriteService {
     );
   }
 
-  save(candidateLink) {
+  save(candidateJobPostingFavorite) {
     return axios.post(
       "http://localhost:8080/api/candidatejobpostingfavorites/save",
-      candidateLink
+      candidateJobPostingFavorite
     );
   }
 
-  delete(candidateLink) {
+  delete(candidateJobPostingFavorite) {
     return axios.post(
       "http://localhost:8080/api/candidatejobpostingfavorites/delete",
-      candidateLink
+      candidateJobPostingFavorite
     );
   }
 }

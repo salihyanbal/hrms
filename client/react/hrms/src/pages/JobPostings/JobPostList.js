@@ -35,7 +35,7 @@ export default function JobPostList({ setCurrentJobPost }) {
             </Table.Row>
           ))}
           <Pagination
-            className="width-100-percent"
+            className="width-100-percent pagination"
             defaultActivePage={1}
             totalPages={10}
             onPageChange={handlePaginationChange}
