@@ -31,6 +31,7 @@ export default class CandidateJobPostingFavoriteService {
   }
 
   delete(candidateJobPostingFavorite) {
+    console.log(candidateJobPostingFavorite);
     return axios.post(
       "http://localhost:8080/api/candidatejobpostingfavorites/delete",
       candidateJobPostingFavorite

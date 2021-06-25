@@ -7,7 +7,7 @@ import CandidateJobPostingFavoriteService from "../../services/candidateJobPosti
 export default function JobInformationCard({ jobPost }) {
   const [fakeCandidateId, setFakeCandidateId] = useState(2);
   const [candidateFavorite, setCandidateFavorite] = useState([]);
-  const [startState, setStarState] = useState(false);
+  const [starState, setStarState] = useState(false);
   let test = 1;
   let candidateJobPostingFavoriteService =
     new CandidateJobPostingFavoriteService();
@@ -21,7 +21,8 @@ export default function JobInformationCard({ jobPost }) {
         setCandidateFavorite(result.data.data);
         setStarState(result.data.data ? true : false);
       });
-  }, [jobPost, test]);
+    console.log("asdjqwje");
+  }, [jobPost, starState]);
 
   const addToFavorite = () => {
     let candidateJobPostingFavorite = {
@@ -68,7 +69,7 @@ export default function JobInformationCard({ jobPost }) {
         <img src={defaultImage} alt="" width="122" height="122" />
       </div>
       <div style={{ display: "flex" }}>
-        {startState ? (
+        {starState ? (
           <Button
             className="star-button"
             circular
