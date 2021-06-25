@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/linktypes")
+@CrossOrigin
 public class LinkTypesController {
 
     private LinkTypeService linkTypeService;

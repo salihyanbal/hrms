@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/employees")
+@CrossOrigin
 public class EmployeesController {
 
     private EmployeeService employeeService;
@@ -17,13 +18,18 @@ public class EmployeesController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody Employee employee){
-        return ResponseEntity.ok(this.employeeService.add(employee));
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody Employee employee){
+        return ResponseEntity.ok(this.employeeService.save(employee));
     }
 
     @GetMapping("/getall")
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(this.employeeService.getAll());
+    }
+
+    @GetMapping("/getbyid")
+    public ResponseEntity<?> getById(@RequestParam int id){
+        return ResponseEntity.ok(this.employeeService.getById(id));
     }
 }

@@ -11,13 +11,20 @@ export default class JobPostingService {
     );
   }
 
+  getAllApprovedStatusByPageNumber(pageNumber) {
+    return axios.get(
+      "http://localhost:8080/api/jobpostings/getallapprovedstatusbypagenumber?pageNumber=" +
+        pageNumber
+    );
+  }
+
   getById(id) {
     return axios.get("http://localhost:8080/api/jobpostings/getbyid?id=" + id);
   }
 
-  getAllByEmployerId(employerId) {
+  getAllByEmployerIdAndDeletedFalse(employerId) {
     return axios.get(
-      "http://localhost:8080/api/jobpostings/getallbyemployerid?employerId=" +
+      "http://localhost:8080/api/jobpostings/getallbyemployeridanddeletedfalse?employerId=" +
         employerId
     );
   }

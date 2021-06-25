@@ -36,11 +36,11 @@ export default function AdminJobPostList() {
 
   return (
     <section className="scroll-bar overflow-scroll scroll-height">
-      <Table celled selectable structured>
+      <Table selectable celled>
         <Table.Header align="center">
           <Table.Row>
             <Table.HeaderCell rowSpan="2">Durum</Table.HeaderCell>
-            <Table.HeaderCell rowSpan="2">Pozisyona</Table.HeaderCell>
+            <Table.HeaderCell rowSpan="2">Pozisyon</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Şehir</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Açıklama</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">
@@ -51,13 +51,7 @@ export default function AdminJobPostList() {
             <Table.HeaderCell rowSpan="2">Son başvuru tarihi</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">İstihdam türü</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Uzaktan</Table.HeaderCell>
-            <Table.HeaderCell colSpan="2" textAlign="center">
-              Durum
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell>Aktif</Table.HeaderCell>
-            <Table.HeaderCell>Onaylanmış</Table.HeaderCell>
+            <Table.HeaderCell rowSpan="2">Silinmiş</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -90,14 +84,7 @@ export default function AdminJobPostList() {
               ) : (
                 <Table.Cell />
               )}
-              {jobPosting.active ? (
-                <Table.Cell textAlign="center">
-                  <Icon color="green" name="checkmark" size="large" />
-                </Table.Cell>
-              ) : (
-                <Table.Cell />
-              )}
-              {jobPosting.jobPostingConfirmation?.confirmed ? (
+              {jobPosting.deleted ? (
                 <Table.Cell textAlign="center">
                   <Icon color="green" name="checkmark" size="large" />
                 </Table.Cell>

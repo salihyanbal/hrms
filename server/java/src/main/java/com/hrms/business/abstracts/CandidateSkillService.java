@@ -7,7 +7,8 @@ import com.hrms.entities.concretes.CandidateSkill;
 import java.util.List;
 
 public interface CandidateSkillService {
-    Result add(CandidateSkill candidateSkill);
+    Result save(CandidateSkill candidateSkill);
+    Result delete(CandidateSkill candidateSkill);
     DataResult<List<CandidateSkill>> getAll();
     DataResult<List<CandidateSkill>> getAllByCandidateId(int candidateId);
 }

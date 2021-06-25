@@ -1,0 +1,6 @@
+.profile-image {
+  border: 2px solid white;
+  position: absolute !important;
+  left: 5%;
+  top: 125px;
+}

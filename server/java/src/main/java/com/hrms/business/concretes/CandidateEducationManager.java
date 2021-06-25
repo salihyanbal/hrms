@@ -25,8 +25,14 @@ public class CandidateEducationManager implements CandidateEducationService {
     }
 
     @Override
-    public Result add(CandidateEducation candidateEducation) {
+    public Result save(CandidateEducation candidateEducation) {
         this.candidateEducationDao.save(candidateEducation);
+        return new SuccessResult();
+    }
+
+    @Override
+    public Result delete(CandidateEducation candidateEducation) {
+        this.candidateEducationDao.delete(candidateEducation);
         return new SuccessResult();
     }
 

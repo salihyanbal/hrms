@@ -7,7 +7,8 @@ import com.hrms.entities.concretes.CandidateExperience;
 import java.util.List;
 
 public interface CandidateExperienceService {
-    Result add(CandidateExperience candidateExperience);
+    Result save(CandidateExperience candidateExperience);
+    Result delete(CandidateExperience candidateExperience);
     DataResult<List<CandidateExperience>> getAll();
     DataResult<List<CandidateExperience>> getAllByCandidateIdOrderByLeaveDate(int candidateId);
 }

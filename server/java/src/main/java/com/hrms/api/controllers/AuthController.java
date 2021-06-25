@@ -5,13 +5,12 @@ import com.hrms.core.utilities.results.Result;
 import com.hrms.entities.dtos.RegisterForCandidateDto;
 import com.hrms.entities.dtos.RegisterForEmployerDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin
 public class AuthController {
 
     private AuthService authService;
@@ -22,13 +21,13 @@ public class AuthController {
     }
 
     @PostMapping("/registerforemployer")
-    public Result registerForEmployer(@RequestBody RegisterForEmployerDto registerForEmployerDto) {
-        return authService.registerForEmployer(registerForEmployerDto);
+    public ResponseEntity<?> registerForEmployer(@RequestBody RegisterForEmployerDto registerForEmployerDto) {
+        return ResponseEntity.ok(authService.registerForEmployer(registerForEmployerDto));
     }
 
     @PostMapping("/registerforcandidate")
-    public Result registerForCandidate(@RequestBody RegisterForCandidateDto registerForJobSeekerDto) {
-        return authService.registerForCandidate(registerForJobSeekerDto);
+    public ResponseEntity<?> registerForCandidate(@RequestBody RegisterForCandidateDto registerForJobSeekerDto) {
+        return ResponseEntity.ok(authService.registerForCandidate(registerForJobSeekerDto));
     }
 
 }

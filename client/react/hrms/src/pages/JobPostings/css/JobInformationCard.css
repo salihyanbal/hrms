@@ -78,3 +78,9 @@
     Segoe UI Symbol, Lucida Grande, Helvetica, Arial, sans-serif;
   color: rgba(0, 0, 0, 0.6);
 }
+
+.star-button {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}

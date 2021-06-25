@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/candidateexperiences")
+@CrossOrigin
 public class CandidateExperiencesController {
 
     private CandidateExperienceService candidateExperienceService;
@@ -18,11 +19,15 @@ public class CandidateExperiencesController {
         this.candidateExperienceService = candidateExperienceService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) CandidateExperience candidateExperience){
-        return ResponseEntity.ok(this.candidateExperienceService.add(candidateExperience));
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) CandidateExperience candidateExperience){
+        return ResponseEntity.ok(this.candidateExperienceService.save(candidateExperience));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody CandidateExperience candidateExperience){
+        return ResponseEntity.ok(this.candidateExperienceService.delete(candidateExperience));
+    }
 
     @GetMapping("/getall")
     public ResponseEntity<?> getAll(){

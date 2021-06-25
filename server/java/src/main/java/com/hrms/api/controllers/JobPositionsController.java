@@ -5,6 +5,7 @@ import com.hrms.core.utilities.results.DataResult;
 import com.hrms.core.utilities.results.Result;
 import com.hrms.entities.concretes.JobPosition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +23,13 @@ public class JobPositionsController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody JobPosition jobPosition){
-        return this.jobPositionService.add(jobPosition);
+    public ResponseEntity<?> add(@RequestBody JobPosition jobPosition){
+        return ResponseEntity.ok(this.jobPositionService.add(jobPosition));
     }
 
 
     @GetMapping("/getall")
-    public DataResult<List<JobPosition>> getAll(){
-        return this.jobPositionService.getAll();
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok(this.jobPositionService.getAll());
     }
 }

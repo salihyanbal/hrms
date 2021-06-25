@@ -37,7 +37,7 @@ public class CandidateEducation {
     private int startYear;
 
     @Column(name = "graduation_year")
-    private int graduationYear;
+    private Integer graduationYear;
 
     @ManyToOne()
     @JoinColumn(name = "candidate_id")

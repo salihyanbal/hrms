@@ -1,11 +1,39 @@
 import "./css/JobInformationCard.css";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
+import CandidateJobPostingFavoriteService from "../../services/candidateJobPostingFavoriteService";
 
 export default function JobInformationCard({ jobPost }) {
+  const [fakeCandidateId, setFakeCandidateId] = useState(2);
+  const [candidateFavorite, setCandidateFavorite] = useState([]);
+
+  let candidateJobPostingFavoriteService =
+    new CandidateJobPostingFavoriteService();
   let defaultImage =
     "https://res.cloudinary.com/cloudlucifer/image/upload/v1622506272/iym1dgabn6cil6hhugck.jpg";
+
+  useEffect(() => {
+    candidateJobPostingFavoriteService
+      .getByCandidateIdAndJobPostingId(fakeCandidateId, jobPost.id)
+      .then((result) => setCandidateFavorite(result.data.data));
+  }, []);
+
+  const addToFavorite = () => {
+    let candidateJobPostingFavorite = {
+      candidate: { id: fakeCandidateId },
+      jobPosting: jobPost,
+    };
+    candidateJobPostingFavoriteService
+      .save(candidateJobPostingFavorite)
+      .then((result) => console.log(result));
+  };
+
+  const removeFromFavorite = () => {
+    candidateJobPostingFavoriteService
+      .delete(candidateFavorite)
+      .then((result) => console.log(result));
+  };
 
   function getHowLongAgo(publishedAt) {
     let today = new Date();
@@ -30,6 +58,21 @@ export default function JobInformationCard({ jobPost }) {
         <img src={defaultImage} alt="" width="122" height="122" />
       </div>
       <div style={{ display: "flex" }}>
+        {candidateFavorite ? (
+          <Button
+            className="star-button"
+            circular
+            icon="star"
+            onClick={() => removeFromFavorite()}
+          />
+        ) : (
+          <Button
+            className="star-button"
+            circular
+            icon="star outline"
+            onClick={() => addToFavorite()}
+          />
+        )}
         <div className="job-informations">
           <div className="job-position">
             <span>{jobPost.jobPosition.name}</span>

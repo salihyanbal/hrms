@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Icon, Table } from "semantic-ui-react";
-import JobPostingService from "../../services/jobPostingService";
+import JobPostingService from "../../../services/jobPostingService";
+import JobPostingStatusService from "../../../services/jobPostingStatusService";
 import AddJobPostingModal from "./AddJobPostingModal";
+import JobPostingStatus from "./JobPostingStatus";
 
 export default function CompanyJobPostList() {
   const [jobPostings, setJobPostings] = useState([]);
@@ -9,13 +11,18 @@ export default function CompanyJobPostList() {
   useEffect(() => {
     let jobPostingService = new JobPostingService();
     jobPostingService
-      .getAllByEmployerId(fakeCompanyId)
+      .getAllByEmployerIdAndDeletedFalse(fakeCompanyId)
       .then((result) => setJobPostings(result.data.data));
   }, []);
 
+  const getJobPostingStatus = (jobPostingId) => {
+    let jobPostingStatusService = new JobPostingStatusService();
+    return jobPostingStatusService.getLastByJobPostingId(jobPostingId);
+  };
+
   return (
     <section className="scroll-bar overflow-scroll scroll-height">
-      <Table celled selectable structured>
+      <Table celled selectable>
         <Table.Header align="center">
           <Table.Row>
             <Table.HeaderCell rowSpan="2">
@@ -28,6 +35,7 @@ export default function CompanyJobPostList() {
                 }
               />
             </Table.HeaderCell>
+            <Table.HeaderCell textAlign="center">Durum</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Pozisyon</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Şehir</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Açıklama</Table.HeaderCell>
@@ -39,33 +47,23 @@ export default function CompanyJobPostList() {
             <Table.HeaderCell rowSpan="2">Son başvuru tarihi</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">İstihdam türü</Table.HeaderCell>
             <Table.HeaderCell rowSpan="2">Uzaktan</Table.HeaderCell>
-            <Table.HeaderCell colSpan="2" textAlign="center">
-              Durum
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell>Aktif</Table.HeaderCell>
-            <Table.HeaderCell>Onaylanmış</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
           {jobPostings.map((jobPosting, i) => (
             <Table.Row key={i}>
+              <Table.Cell textAlign="center">
+                <Button color="red" icon>
+                  <Icon name="trash" />
+                </Button>
+              </Table.Cell>
               <Table.Cell>
-                <Button.Group>
-                  <Button icon>
-                    <Icon name="edit" />
-                  </Button>
-
-                  <Button color="red" icon>
-                    <Icon name="trash" />
-                  </Button>
-                </Button.Group>
+                <JobPostingStatus jobPostingId={jobPosting.id} />
               </Table.Cell>
               <Table.Cell>{jobPosting.jobPosition.name}</Table.Cell>
               <Table.Cell>{jobPosting.city.name}</Table.Cell>
-              <Table.Cell singleLine>
+              <Table.Cell>
                 {jobPosting.jobDescription.substring(0, 20)}
               </Table.Cell>
               <Table.Cell>{jobPosting.openPositionCount}</Table.Cell>
@@ -76,20 +74,6 @@ export default function CompanyJobPostList() {
               <Table.Cell>{jobPosting.applicationDeadline}</Table.Cell>
               <Table.Cell>{jobPosting.employmentType?.name}</Table.Cell>
               {jobPosting.isRemote ? (
-                <Table.Cell textAlign="center">
-                  <Icon color="green" name="checkmark" size="large" />
-                </Table.Cell>
-              ) : (
-                <Table.Cell />
-              )}
-              {jobPosting.active ? (
-                <Table.Cell textAlign="center">
-                  <Icon color="green" name="checkmark" size="large" />
-                </Table.Cell>
-              ) : (
-                <Table.Cell />
-              )}
-              {jobPosting.jobPostingConfirmation?.confirmed ? (
                 <Table.Cell textAlign="center">
                   <Icon color="green" name="checkmark" size="large" />
                 </Table.Cell>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/candidateskills")
+@CrossOrigin
 public class CandidateSkillsController {
 
     private CandidateSkillService candidateSkillService;
@@ -19,14 +20,23 @@ public class CandidateSkillsController {
         this.candidateSkillService = candidateSkillService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody CandidateSkill candidateSkill){
-        return ResponseEntity.ok(this.candidateSkillService.add(candidateSkill));
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody CandidateSkill candidateSkill){
+        return ResponseEntity.ok(this.candidateSkillService.save(candidateSkill));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody CandidateSkill candidateSkill){
+        return ResponseEntity.ok(this.candidateSkillService.delete(candidateSkill));
+    }
 
     @GetMapping("/getall")
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(this.candidateSkillService.getAll());
+    }
+
+    @GetMapping("/getallbycandidateid")
+    public ResponseEntity<?> getAllByCandidateId(@RequestParam int candidateId){
+        return ResponseEntity.ok(this.candidateSkillService.getAllByCandidateId(candidateId));
     }
 }

@@ -23,8 +23,14 @@ public class CandidateExperienceManager implements CandidateExperienceService {
     }
 
     @Override
-    public Result add(CandidateExperience candidateExperience) {
+    public Result save(CandidateExperience candidateExperience) {
         this.experienceDao.save(candidateExperience);
+        return new SuccessResult();
+    }
+
+    @Override
+    public Result delete(CandidateExperience candidateExperience) {
+        this.experienceDao.delete(candidateExperience);
         return new SuccessResult();
     }
 

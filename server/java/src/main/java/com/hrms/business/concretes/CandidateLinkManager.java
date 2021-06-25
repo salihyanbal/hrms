@@ -23,8 +23,14 @@ public class CandidateLinkManager implements CandidateLinkService {
     }
 
     @Override
-    public Result add(CandidateLink candidateLink) {
+    public Result save(CandidateLink candidateLink) {
         this.candidateLinkDao.save(candidateLink);
+        return new SuccessResult();
+    }
+
+    @Override
+    public Result delete(CandidateLink candidateLink) {
+        this.candidateLinkDao.delete(candidateLink);
         return new SuccessResult();
     }
 

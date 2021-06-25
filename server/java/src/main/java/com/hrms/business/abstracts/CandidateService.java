@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CandidateService {
 
-    Result add(Candidate candidates);
+    Result save(Candidate candidates);
     DataResult<Candidate> getByIdentificationNumber(String identificationNumber);
     DataResult<Candidate> getById(int id);
     DataResult<List<Candidate>> getAll();

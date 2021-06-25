@@ -7,6 +7,7 @@ import com.hrms.entities.concretes.Employee;
 import java.util.List;
 
 public interface EmployeeService {
-    Result add(Employee employee);
+    Result save(Employee employee);
     DataResult<List<Employee>> getAll();
+    DataResult<Employee> getById(int id);
 }

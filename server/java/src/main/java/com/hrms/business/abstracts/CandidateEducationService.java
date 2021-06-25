@@ -8,7 +8,9 @@ import com.hrms.entities.concretes.CandidateExperience;
 import java.util.List;
 
 public interface CandidateEducationService {
-    Result add(CandidateEducation candidateEducation);
+    Result save(CandidateEducation candidateEducation);
+    Result delete(CandidateEducation candidateEducation);
     DataResult<List<CandidateEducation>> getAll();
     DataResult<List<CandidateEducation>> getAllByCandidateIdOrderByGraduationYear(int candidateId);
+
 }

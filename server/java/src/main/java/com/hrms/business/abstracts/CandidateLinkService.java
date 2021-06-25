@@ -7,7 +7,8 @@ import com.hrms.entities.concretes.CandidateLink;
 import java.util.List;
 
 public interface CandidateLinkService {
-    Result add(CandidateLink candidateLink);
+    Result save(CandidateLink candidateLink);
+    Result delete(CandidateLink candidateLink);
     DataResult<List<CandidateLink>> getAll();
     DataResult<List<CandidateLink>> getAllByCandidateId(int candidateId);
 }

@@ -64,3 +64,23 @@ body {
 textarea {
   resize: none;
 }
+
+.hover-cursor-pointer:hover {
+  cursor: pointer;
+}
+
+.bg-color-white {
+  background-color: #ffffff;
+}
+
+.text-align-left {
+  text-align: left !important;
+}
+
+.margin-bottom-3rem {
+  margin-bottom: 3rem;
+}
+
+.float-right {
+  float: right;
+}

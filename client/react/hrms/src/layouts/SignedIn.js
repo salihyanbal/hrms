@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { Dropdown, Menu } from "semantic-ui-react";
 
 export default function SignedIn({ signOut }) {
@@ -14,7 +15,18 @@ export default function SignedIn({ signOut }) {
           icon="user"
         >
           <Dropdown.Menu>
-            <Dropdown.Item text="Bilgilerim" icon="info"></Dropdown.Item>
+            <Dropdown.Item
+              text="Bilgilerim"
+              icon="info"
+              to="/profile"
+              as={NavLink}
+            ></Dropdown.Item>
+            <Dropdown.Item
+              as={NavLink}
+              text="Ayarlar"
+              icon="settings"
+              to="/settings"
+            ></Dropdown.Item>
             <Dropdown.Item
               text="Çıkış yap"
               icon="sign-out"

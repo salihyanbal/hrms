@@ -23,8 +23,14 @@ public class CandidateLanguageManager implements CandidateLanguageService {
     }
 
     @Override
-    public Result add(CandidateLanguage candidateLanguage) {
+    public Result save(CandidateLanguage candidateLanguage) {
         this.candidateLanguageDao.save(candidateLanguage);
+        return new SuccessResult();
+    }
+
+    @Override
+    public Result delete(CandidateLanguage candidateLanguage) {
+        this.candidateLanguageDao.delete(candidateLanguage);
         return new SuccessResult();
     }
 

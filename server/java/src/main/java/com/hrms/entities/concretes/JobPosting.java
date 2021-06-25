@@ -1,20 +1,26 @@
 package com.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.*;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@TypeDef(name = "json", typeClass = JsonType.class)
 @Table(name="job_postings")
 public class JobPosting {
 
@@ -57,10 +63,6 @@ public class JobPosting {
     private JobPosition jobPosition;
 
     @ManyToOne()
-    @JoinColumn(name = "employer_id")
-    private Employer employer;
-
-    @ManyToOne()
     @JoinColumn(name = "city_id")
     private City city;
 
@@ -68,7 +70,16 @@ public class JobPosting {
     @JoinColumn(name = "employment_type_id")
     private EmploymentType employmentType;
 
+    @ManyToOne()
+    @JoinColumn(name = "employer_id")
+    private Employer employer;
+
     @OneToMany(mappedBy = "jobPosting",fetch = FetchType.LAZY)
     @JsonIgnore
     private List<JobPostingStatus> jobPostingStatuses;
+
+    @OneToMany(mappedBy = "jobPosting",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<CandidateJobPostingFavorite> candidateJobPostingFavorites;
+
 }

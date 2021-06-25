@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/candidateeducations")
+@CrossOrigin
 public class CandidateEducationsController {
 
     private CandidateEducationService candidateEducationService;
@@ -17,9 +18,14 @@ public class CandidateEducationsController {
         this.candidateEducationService = candidateEducationService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody CandidateEducation candidateEducation){
-        return ResponseEntity.ok(this.candidateEducationService.add(candidateEducation));
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody CandidateEducation candidateEducation){
+        return ResponseEntity.ok(this.candidateEducationService.save(candidateEducation));
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody CandidateEducation candidateEducation){
+        return ResponseEntity.ok(this.candidateEducationService.delete(candidateEducation));
     }
 
 

@@ -17,8 +17,9 @@ import java.util.List;
 @CrossOrigin
 public class JobPostingsController {
 
+    //TODO: refactor
     private enum StatusType{
-        WAITING(1),APPROVED(2), REJECTED (3);
+        WAITING_FOR_PUBLISH(1),APPROVED(2), REJECTED (3), WAITING_FOR_UPDATE(4);
         private final Integer value;
 
         StatusType(Integer value) {
@@ -38,18 +39,18 @@ public class JobPostingsController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) JobPosting jobPosting){
-        return this.jobPostingService.add(jobPosting);
+    public ResponseEntity<?> add(@RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) JobPosting jobPosting){
+        return ResponseEntity.ok(this.jobPostingService.add(jobPosting));
     }
 
-    @PostMapping("/toggleactivestatus")
-    public Result toggleActiveStatus(@RequestParam int id){
-        return this.jobPostingService.toggleActiveStatus(id);
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam int id){
+        return ResponseEntity.ok(this.jobPostingService.delete(id));
     }
 
     @GetMapping("/getall")
-    public DataResult<List<JobPosting>> getAll(){
-        return this.jobPostingService.getAll();
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok(this.jobPostingService.getAll());
     }
 
     @GetMapping("/getbyid")
@@ -58,13 +59,13 @@ public class JobPostingsController {
     }
 
     @GetMapping("/getallbyapplicationdeadline")
-    public DataResult<List<JobPosting>> getAllByApplicationDeadline(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
-        return this.jobPostingService.getAllByApplicationDeadline(date);
+    public ResponseEntity<?> getAllByApplicationDeadline(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+        return ResponseEntity.ok(this.jobPostingService.getAllByApplicationDeadline(date));
     }
 
     @GetMapping("/getallbyemployerid")
-    public DataResult<List<JobPosting>> getAllByEmployerId(@RequestParam int employerId){
-        return this.jobPostingService.getAllByEmployerId(employerId);
+    public ResponseEntity<?> getAllByEmployerId(@RequestParam int employerId){
+        return ResponseEntity.ok(this.jobPostingService.getAllByEmployerId(employerId));
     }
 
     @GetMapping("/getallapprovedstatus")
@@ -72,4 +73,13 @@ public class JobPostingsController {
         return ResponseEntity.ok(this.jobPostingService.getAllByStatusId(StatusType.APPROVED.getValue()));
     }
 
+    @GetMapping("/getallapprovedstatusbypagenumber")
+    public ResponseEntity<?> getAllApprovedStatusByPageNumber(int pageNumber){
+        return ResponseEntity.ok(this.jobPostingService.getAllByStatusIdAndPageNumber(StatusType.APPROVED.getValue(),pageNumber));
+    }
+
+    @GetMapping("/getallbyemployeridanddeletedfalse")
+    public ResponseEntity<?> getAllByEmployerIdAndDeletedFalse(@RequestParam int employerId) {
+        return ResponseEntity.ok(this.jobPostingService.getAllByEmployerIdAndIsDeletedFalse(employerId));
+    }
 }

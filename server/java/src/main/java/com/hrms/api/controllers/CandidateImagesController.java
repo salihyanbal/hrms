@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/candidateimages")
+@CrossOrigin
 public class CandidateImagesController {
 
     private CandidateImageService candidateImageService;

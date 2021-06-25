@@ -13,13 +13,14 @@ import {
 } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import CityService from "../../services/cityService";
-import JobPositionService from "../../services/jobPositionService";
+import CityService from "../../../services/cityService";
+import JobPositionService from "../../../services/jobPositionService";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
-import JobPostingService from "../../services/jobPostingService";
-import EmploymentTypeService from "../../services/employmentTypeService";
+import JobPostingService from "../../../services/jobPostingService";
+import EmploymentTypeService from "../../../services/employmentTypeService";
 
 export default function AddJobPostingModal({ triggerButton }) {
+  const [open, setOpen] = useState(false);
   let jobPostingService = new JobPostingService();
 
   const [jobPositions, setJobPositions] = useState([]);
@@ -71,11 +72,15 @@ export default function AddJobPostingModal({ triggerButton }) {
   );
 
   const addJobPostingSchema = Yup.object().shape({
-    jobPositionId: Yup.number().required("İş pozisyonu seçilmesi gerekiyor!"),
-    cityId: Yup.number().required("Şehir seçilmesi gerekiyor!"),
-    employmentTypeId: Yup.number().required(
-      "İstihdam türü seçilmesi gerekiyor!"
-    ),
+    jobPosition: Yup.object({
+      id: Yup.number().required("İş pozisyonu seçilmesi gerekiyor!"),
+    }),
+    city: Yup.object({
+      id: Yup.number().required("Şehir seçilmesi gerekiyor!"),
+    }),
+    employmentType: Yup.object({
+      id: Yup.number().required("İstihdam türü seçilmesi gerekiyor!"),
+    }),
     minSalary: Yup.number().min(0, "En az maaş 0'dan küçük olamaz!"),
     maxSalary: Yup.number().min(0, "En çok maaş 0'dan küçük olamaz!"),
     openPositionCount: Yup.number()
@@ -89,9 +94,15 @@ export default function AddJobPostingModal({ triggerButton }) {
 
   const formik = useFormik({
     initialValues: {
-      jobPositionId: "",
-      cityId: "",
-      employmentTypeId: "",
+      jobPosition: {
+        id: "",
+      },
+      city: {
+        id: "",
+      },
+      employmentType: {
+        id: "",
+      },
       minSalary: "",
       maxSalary: "",
       openPositionCount: "",
@@ -101,38 +112,20 @@ export default function AddJobPostingModal({ triggerButton }) {
     },
     validationSchema: addJobPostingSchema,
     onSubmit: (values) => {
-      let jobPosting = {
-        jobPosition: {
-          id: values.jobPositionId,
-        },
-        city: {
-          id: values.cityId,
-        },
-        employmentType: {
-          id: values.employmentTypeId,
-        },
-        employer: {
-          id: 1, // fakeid
-        },
-        minSalary: values.minSalary,
-        maxSalary: values.maxSalary,
-        openPositionCount: values.openPositionCount,
-        applicationDeadline: values.applicationDeadline,
-        jobDescription: values.jobDescription,
-        isRemote: values.isRemote,
-      };
-      jobPostingService.add(jobPosting).then((result) => console.log(result));
+      values.employer = { id: 1 };
+      jobPostingService.add(values).then((result) => console.log(result));
     },
   });
 
   const handleFormErrorMessages = () => {
-    let errorMessages = Object.keys(formik.errors).map((key, i) => {
-      return formik.errors[key];
+    let errorMessages = Object.values(formik.errors).map((error, i) => {
+      if (error.id) {
+        return error.id;
+      }
+      return error;
     });
     return errorMessages;
   };
-
-  const [open, setOpen] = useState(false);
 
   const handleChangeSemantic = (value, fieldName) => {
     formik.setFieldValue(fieldName, value);
@@ -169,14 +162,14 @@ export default function AddJobPostingModal({ triggerButton }) {
                   search
                   selection
                   clearable
-                  error={formik.errors.jobPositionId ? true : false}
+                  error={formik.errors.jobPosition?.id ? true : false}
                   onChange={(event, data) => {
-                    handleChangeSemantic(data.value, "jobPositionId");
+                    handleChangeSemantic(data.value, "jobPosition.id");
                     handleFormErrorMessages();
                   }}
                   onBlur={formik.onBlur}
-                  id="jobPositionId"
-                  value={formik.values.jobPositionId}
+                  id="jobPosition.id"
+                  value={formik.values.jobPosition.id}
                   options={jobPositionsOptions}
                 />
               </div>
@@ -188,14 +181,14 @@ export default function AddJobPostingModal({ triggerButton }) {
                   search
                   selection
                   clearable
-                  error={formik.errors.cityId ? true : false}
+                  error={formik.errors.city?.id ? true : false}
                   onChange={(event, data) => {
-                    handleChangeSemantic(data.value, "cityId");
+                    handleChangeSemantic(data.value, "city.id");
                     handleFormErrorMessages();
                   }}
                   onBlur={formik.onBlur}
-                  id="cityId"
-                  value={formik.values.cityId}
+                  id="city.id"
+                  value={formik.values.city.id}
                   options={citiesOptions}
                 />
               </div>
@@ -207,14 +200,14 @@ export default function AddJobPostingModal({ triggerButton }) {
                   search
                   selection
                   clearable
-                  error={formik.errors.employmentTypeId ? true : false}
+                  error={formik.errors.employmentType?.id ? true : false}
                   onChange={(event, data) => {
-                    handleChangeSemantic(data.value, "employmentTypeId");
+                    handleChangeSemantic(data.value, "employmentType.id");
                     handleFormErrorMessages();
                   }}
                   onBlur={formik.onBlur}
-                  id="employmentTypeId"
-                  value={formik.values.employmentTypeId}
+                  id="employmentType.id"
+                  value={formik.values.employmentType.id}
                   options={employmentTypeOptions}
                 />
               </div>

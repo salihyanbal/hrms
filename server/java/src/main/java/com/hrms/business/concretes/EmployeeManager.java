@@ -24,7 +24,7 @@ public class EmployeeManager implements EmployeeService {
 
 
     @Override
-    public Result add(Employee employee) {
+    public Result save(Employee employee) {
         this.employeeDao.save(employee);
         return new SuccessResult();
     }
@@ -32,5 +32,10 @@ public class EmployeeManager implements EmployeeService {
     @Override
     public DataResult<List<Employee>> getAll() {
         return new SuccessDataResult<>(this.employeeDao.findAll());
+    }
+
+    @Override
+    public DataResult<Employee> getById(int id) {
+        return new SuccessDataResult<>(this.employeeDao.findById(id).orElse(null));
     }
 }

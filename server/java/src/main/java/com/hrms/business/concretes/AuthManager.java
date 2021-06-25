@@ -73,7 +73,7 @@ public class AuthManager implements AuthService {
 
         mailService.send(registerForCandidateDto.getEmail());
         Candidate candidatesForRegister = modelMapper.map(registerForCandidateDto, Candidate.class);
-        candidateService.add(candidatesForRegister);
+        candidateService.save(candidatesForRegister);
         return new SuccessResult("Kullanıcı kaydoldu.");
     }
 

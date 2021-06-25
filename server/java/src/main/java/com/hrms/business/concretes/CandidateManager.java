@@ -36,9 +36,9 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public Result add(Candidate candidates) {
+    public Result save(Candidate candidates) {
         this.candidateDao.save(candidates);
-        return new SuccessResult("İş arayan eklendi.");
+        return new SuccessResult("İşlem başarılı");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CandidateManager implements CandidateService {
 
     @Override
     public DataResult<Candidate> getById(int id) {
-        return new SuccessDataResult<>(this.candidateDao.findById(id).get());
+        return new SuccessDataResult<>(this.candidateDao.findById(id).orElse(null));
     }
 
     @Override

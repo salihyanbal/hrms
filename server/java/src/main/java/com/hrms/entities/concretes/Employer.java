@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -34,8 +36,9 @@ public class Employer extends User{
     @NotBlank
     private String phoneNumber;
 
-    @Column(name="is_activated_by_employee")
-    private boolean isActivatedByEmployee;
+    @Column(name = "update")
+    @Type(type = "json")
+    private Map<String,Object> update;
 
     @OneToMany(mappedBy = "employer")
     private List<JobPosting> jobPostings;

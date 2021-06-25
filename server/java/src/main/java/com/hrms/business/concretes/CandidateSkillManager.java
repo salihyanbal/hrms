@@ -23,8 +23,14 @@ public class CandidateSkillManager implements CandidateSkillService {
     }
 
     @Override
-    public Result add(CandidateSkill candidateSkill) {
+    public Result save(CandidateSkill candidateSkill) {
         this.candidateSkillDao.save(candidateSkill);
+        return new SuccessResult();
+    }
+
+    @Override
+    public Result delete(CandidateSkill candidateSkill) {
+        this.candidateSkillDao.delete(candidateSkill);
         return new SuccessResult();
     }
 

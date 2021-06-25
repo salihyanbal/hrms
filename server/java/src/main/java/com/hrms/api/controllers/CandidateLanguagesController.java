@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/candidatelanguages")
+@CrossOrigin
 public class CandidateLanguagesController {
     private CandidateLanguageService candidateLanguageService;
 
@@ -18,14 +19,23 @@ public class CandidateLanguagesController {
         this.candidateLanguageService = candidateLanguageService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody @Valid CandidateLanguage candidateLanguage){
-        return ResponseEntity.ok(this.candidateLanguageService.add(candidateLanguage));
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody @Valid CandidateLanguage candidateLanguage){
+        return ResponseEntity.ok(this.candidateLanguageService.save(candidateLanguage));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody CandidateLanguage candidateLanguage){
+        return ResponseEntity.ok(this.candidateLanguageService.delete(candidateLanguage));
+    }
 
     @GetMapping("/getall")
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(this.candidateLanguageService.getAll());
+    }
+
+    @GetMapping("/getallbycandidateid")
+    public ResponseEntity<?> getAllByCandidateId(int candidateId){
+        return ResponseEntity.ok(this.candidateLanguageService.getAllByCandidateId(candidateId));
     }
 }

@@ -11,6 +11,9 @@ export default function AdminManagementMenu() {
         <Menu.Item name="jobPostings" active={activeItem === "job-postings"}>
           İş ilanları
         </Menu.Item>
+        <Menu.Item name="employers" active={activeItem === "employers"}>
+          Şirketler
+        </Menu.Item>
       </Menu>
     </div>
   );

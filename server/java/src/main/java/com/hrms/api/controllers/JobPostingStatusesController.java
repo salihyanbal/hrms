@@ -19,7 +19,6 @@ public class JobPostingStatusesController {
         this.jobPostingStatusService = jobPostingStatusService;
     }
 
-
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody JobPostingStatus jobPostingStatus){
         return ResponseEntity.ok(this.jobPostingStatusService.add(jobPostingStatus));
